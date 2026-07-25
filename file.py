@@ -18,7 +18,7 @@ def curses():
 
 @app.route("/booking")
 def booking():
-    return render_template('booking.html', name = 'booking')    
+    return render_template('booking.html', name = 'booking')   
 
 
 @app.route("/contact")
@@ -27,4 +27,4 @@ def contact():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=9000 ,debug=True)

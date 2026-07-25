@@ -1,3 +1,4 @@
+const navbar = document.querySelector(".navbar");
 window.addEventListener("scroll", function () {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > 50){
@@ -61,6 +62,21 @@ const counterObserver = new IntersectionObserver((entries) => {
 counters.forEach( counter => counterObserver.observe(counter));
 
 
+//hamburger menu
+const hamburger = document.getElementById("hamburger");
+const navlinks = document.getElementById("nav-links");
+hamburger.addEventListener("click", function(){
+    navlinks.classList.toggle("active");
+    if (navlinks.classList.contains("active")) {
+        hamburger.innerHTML ="×";
+        } else{
+            hamburger.innerHTML ="≡";
+    }
+});
+
+
+
+
 
 AOS.init({
     duration: 900,
@@ -68,3 +84,4 @@ AOS.init({
     easing:"ease-in-out",
     offset: 100
 })
+
