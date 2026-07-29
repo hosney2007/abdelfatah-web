@@ -1,0 +1,9 @@
+{% extends "base.html"%}
+{%block body%}
+<h1>welcome {{user.name}}</h1>
+<p>EMAIL: {{ user.email}}</p>
+<p> Role : {{user.role}}</p>
+<button type="submit">
+    <a href="/logout"> logout</a>
+</button>
+{%endblock%}

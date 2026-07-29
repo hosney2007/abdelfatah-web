@@ -1,0 +1,56 @@
+{% extends "base.html"%}
+{%block body%}
+<h1> add course</h1>
+<form method="post">
+    <input
+     type="text"
+    name="title"
+    placeholder="Course title"
+    required
+    >
+    <textarea 
+    name="description"
+    placeholder="course description"
+    required
+    ></textarea>
+    <select name="course_type" id="course_type">
+        <option value="">
+            choose course
+        </option>
+        <option value="offline">
+            offline
+        </option>
+        <option value="online">
+            online
+        </option>
+        <option value="recorded">
+            recorded
+        </option>        
+    </select>
+    <div id="pricebox" style="display: none;">
+        <input
+         type="number"
+         name="price"
+         placeholder="price in EGP"
+         min="0"
+         step="0.01"
+        >
+    </div>
+    <button type="submit">
+        add course 
+    </button>
+</form>
+<script>
+    const courseType =  document.getElementById("course_type");
+    const priceBox = document.getElementById("pricebox");
+    courseType.addEventListener("change", function(){
+        if (this.value ==="recorded") {
+            priceBox.style.display = "block";
+        }else{
+            priceBox.style.display = "none"    
+
+        }
+    });
+</script>
+
+{%endblock%}

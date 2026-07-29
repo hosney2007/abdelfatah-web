@@ -1,0 +1,56 @@
+{% extends "base.html"%}
+{%block body%}
+<h1> edit course</h1>
+<form method="post">
+    <input
+     type="text"
+    name="title"
+    value="{{course.title}}"
+    required
+    >
+    <textarea 
+    name="description"
+    required
+    > {{course.description}}</textarea>
+    <select name="course_type" id="course_type" required>
+        <option value="">
+            choose course
+        </option>
+        <option value="offline" {% if course.course_type == "offline" %} selected {% endif %}>
+            offline
+        </option>
+        <option value="online" {% if course.course_type =="online" %} selected {% endif %}>
+            online
+        </option>
+        <option value="recorded" {% if course.course_type == "recorded" %} selected {% endif %}>
+            recorded
+        </option>        
+    </select>
+    <div id="pricebox">
+        <input
+         type="number"
+         name="price"
+         value="{{course.price if course.price is not none else ''}}"
+         placeholder="price in EGP"
+         min="0"
+         step="0.01"
+        >
+    </div>
+    <button type="submit">
+        save change 
+    </button>
+</form>
+<script>
+    const courseType =  document.getElementById("course_type");
+    const priceBox = document.getElementById("pricebox");
+    courseType.addEventListener("change", function(){
+        if (this.value ==="recorded") {
+            priceBox.style.display = "block";
+        }else{
+            priceBox.style.display = "none"    
+
+        }
+    });
+</script>
+
+{%endblock%}

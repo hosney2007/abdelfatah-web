@@ -1,0 +1,39 @@
+
+{% extends "base.html"%}
+
+
+
+{%block body%}
+<section class="auth-section">
+    <div class="auth-card">
+        <h1>Creat Account</h1>
+        <p> creat your student account </p>
+      <form method="post">
+          <input 
+          type="text"
+          name="name"
+          placeholder="full name"
+          required
+          >
+         <input 
+           type="email"
+           name="email"
+           placeholder="Email"
+           required
+           >
+           <input 
+            type="password"
+            name="password"
+            placeholder="password"
+            required
+            >    
+       <button type="submit"> Creat Account</button>
+      </form>
+      <p>
+        Already have an account?
+        <a href="/login"> Login</a>
+      </p>
+    </div>
+
+</section>
+{%endblock%}

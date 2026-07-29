@@ -9,30 +9,6 @@ window.addEventListener("scroll", function () {
 
 });
 
-//study mode
-const offline = document.querySelector('input[value="offline"]');
-const online = document.querySelector('input[value="online"]');
-//branch box
-const branchBox = document.getElementById("branch-box");
-const schadulebox = document.getElementById("schadule-box");
-if (branchBox && schadulebox && online && offline) {
-
-    branchBox.style.display = "none";
-    schadulebox.style.display = "none";
-    //oflin
-    offline.addEventListener("change",function(){
-        branchBox.style.display = "flex"
-        schadulebox.style.display = "none"
-
-    });
-
-    online.addEventListener("change",function(){
-        branchBox.style.display = "none"
-        schadulebox.style.display = "flex"
-
-    });
-
-}
 const counters = document.querySelectorAll(".counter");
 const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry =>{
@@ -85,3 +61,152 @@ AOS.init({
     offset: 100
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// Booking options
+// ===============================
+
+const exam = document.getElementById("exam");
+
+const offline = document.querySelector('input[value="offline"]');
+const online = document.querySelector('input[value="online"]');
+
+const branchBox = document.getElementById("branch-box");
+const branch = document.getElementById("branch");
+
+const scheduleBox = document.getElementById("schedule-box");
+const schedule = document.getElementById("schedule");
+
+
+// ===============================
+// Load available groups
+// ===============================
+
+async function loadSchedules() {
+    console.log("loadSchedules");
+
+    const examValue = exam.value;
+
+    const modeValue = document.querySelector(
+        'input[name="mode"]:checked'
+    )?.value;
+
+    const branchValue = branch.value;
+
+
+    // لو لسه مفيش Exam أو Mode
+    if (!examValue || !modeValue) {
+
+        scheduleBox.style.display = "none";
+
+        schedule.innerHTML = `
+            <option value="">Choose Group</option>
+        `;
+
+        return;
+    }
+
+
+    // ===============================
+    // ONLINE
+    // ===============================
+
+    if (modeValue === "online") {
+
+        branchBox.style.display = "none";
+
+    }
+
+
+    // ===============================
+    // OFFLINE
+    // ===============================
+
+    if (modeValue === "offline") {
+
+        branchBox.style.display = "flex";
+
+        // لازم يختار الفرع
+        if (!branchValue) {
+
+            scheduleBox.style.display = "none";
+
+            schedule.innerHTML = `
+                <option value="">Choose Group</option>
+            `;
+
+            return;
+        }
+
+    }
+
+
+    // ===============================
+    // Get groups from Flask
+    // ===============================
+
+    let url =
+        `/booking/schedules?course_id=${examValue}&mode=${modeValue}`;
+
+
+    if (modeValue === "offline") {
+
+        url += `&branch_id=${branchValue}`;
+
+    }
+
+
+    const response = await fetch(url);
+    console.log(response);
+
+    const schedules = await response.json();
+    console.log(schedules);
+
+
+    // نمسح القديم
+    schedule.innerHTML = `
+        <option value="">Choose Group</option>
+    `;
+
+
+    // نعرض الجروبات
+    schedules.forEach(item => {
+
+        const option = document.createElement("option");
+
+        option.value = item.id;
+
+        option.textContent = item.text
+  
+        schedule.appendChild(option);
+
+    });
+
+
+    scheduleBox.style.display = "flex";
+}
+
+
+// ===============================
+// Events
+// ===============================
+
+exam.addEventListener("change", loadSchedules);
+
+offline.addEventListener("change", loadSchedules);
+
+online.addEventListener("change", loadSchedules);
+
+branch.addEventListener("change", loadSchedules);

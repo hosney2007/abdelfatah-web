@@ -1,0 +1,16 @@
+{% extends "base.html"%}
+
+{% block body %}
+<h1>offline courses </h1>
+{% if course %}
+    {%for course in course%}
+        <div>
+            <h2>{{course.title}}</h2>
+            <p>{{ course.description}}</p>
+            <a href="/booking"> Book course</a>
+        </div>
+    {%endfor%}    
+{%else%}
+   <p> no offline courses avalibale </p>    
+{%endif%}
+{%endblock%}

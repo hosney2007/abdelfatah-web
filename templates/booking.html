@@ -17,36 +17,39 @@
 
 <section class="booking-form-section">
     <div class="container">
-        <form class="booking-form">    
+        <form class="booking-form" method="post">
+">    
             <div class="form-grid">
             <div class="input-box">
                 <label>Student Name</label>
-                <input type="text" placeholder="Enter student name" required>
+                <input type="text" placeholder="Enter student name" name="student_name" required>
             </div>
             <div class="input-box">
                 <label> student Number</label>
-                <input type="text" placeholder="Enter student number" required>
+                <input type="text" placeholder="Enter student number" name="student_number" required>
             </div>
             <div class="input-box">
                 <label>parent Number</label>
-                <input type="text" placeholder="Enter parent number" required>
+                <input type="text" placeholder="Enter parent number" name="parent_number" required>
             </div>
             <div class="input-box">
                 <label>Student Grade</label>
                 <select required>
                     <option value="">Select Grade</option>
-                    <option> Grade 10</option>
-                    <option>Grade 11</option>
-                    <option>Grade 12</option>
+                    <option value="10"> Grade 10</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
                 </select>
             </div>
             <div class="input-box">
-                <label>Student Name</label>
-                <select required>
+                <label>Course Type</label>
+                <select name="exam" id="exam" required>
                     <option value=""> Select course </option>
-                    <option>SAT</option>
-                    <option>EST</option>
-                    <option>ACT</option>
+                {%for course in course%}
+                   <option value="{{course.id}}">
+                       {{course.title}}
+                   </option>
+                {%endfor%}
                 </select>
             </div>
         </div>
@@ -68,33 +71,31 @@
         </div>
         <div class="input-box" id="branch-box">
             <label>Branch</label>
-            <select id="branch">
+            <select id="branch" name="branch_id" >
                 <option value="">Select Branch</option>
-                <option value="maadi">Maadi</option>
-                <option value="newcairo">New cairo</option>
-                <option value="nasr">Nasr City</option>   
+                {%for branch in branches%}
+                   <option value="{{branch.id}}">
+                       {{branch.name}}
+                   </option>
+                {%endfor%}   
             </select>
         </div>
         <div class="input-box" id="schadule-box">
             <label> Avalibale Groups</label>
-            <select id="schadule">
-                <option value=""> Choose Group</option>
+            <select id="schadule" name="schadule_id" required>
+                <option value=""> Choose Group</option>               
             </select>
-
         </div>
         <div class="input-box full width">
             <label> Additional Notes</label>
             <textarea rows="6" placeholder="Write any additional notes..."></textarea>
-
         </div>
         <div class="submit-btn">
             <button type="submit">
                 Book Now
             </button>
-
         </div>
        </form>
-
     </div>
 </section>
 
