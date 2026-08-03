@@ -1,17 +1,59 @@
 {% extends "base.html"%}
 
-{% block body %}
-<h1>recorded courses </h1>
-{% if course %}
-    {%for course in course%}
-        <div>
-            <h2>{{course.title}}</h2>
-            <p>{{ course.description}}</p>
-            <p> {{course.price}}</p>
-            <a href="#"> buy course</a>
+{%block body%}
+
+
+<section class="recorded-page">
+    <div class="recorded-header">
+       <h1 class="page-title">Recorded Courses</h1>
+       <p>Learn anytime, anywhere with our recorded Courses</p>
+    </div>
+</section>
+<section  class="recorded-courses">
+    <div class="recorded-container">
+        <div class="recorded-grid">
+          {%for recorded in recorded%}
+            <div class="recorded-card">
+                <div class="recorded-img" c>
+                    {%if recorded.thumbnail%}
+                      <img src="{{ url_for('static', filename='uploads/'+ recorded.thumbnail) }}" alt="{{recorded.title}}">
+                    {%endif%}
+                </div>
+                <div class="recorded-content">
+                    <h3>{{recorded.title}}</h3>
+                    <p> {{recorded.description}}</p>
+                   <span>{{recorded.price}} EGP</span>
+                   {% set purchase = purchases.get(recorded.id)%}
+                </div>
+                <div class="recorded-actions">
+                    {%if not purchase %}
+                    <a href="{{ url_for('recorded.payment', id=recorded.id)}}" class="btn"> Buy</a>
+                    {%elif purchase.status == "pending" %}
+                    <button >
+                        Waiting Approval
+                    </button>
+                    {%elif purchase.status =="approved" %}
+
+                    <a href="{{ url_for('recorded.course_lessons', course_id=recorded.id) }}"
+                     class="btn btn-primary">
+                     Watch Course
+                   </a>
+
+                    {%elif purchase.status == "rejected" %}
+                    <a href="{{ url_for('recorded.buy_course', id=recorded.id)}}" class="btn">upload pyment again</a>
+                    {%endif%}
+
+                </div>
+            </div>
+          {%endfor%} 
         </div>
-    {%endfor%}    
-{%else%}
-   <p> no offline courses avalibale </p>    
-{%endif%}
+    </div>
+</section>   
+
+
+
+
+
+
+         
 {%endblock%}

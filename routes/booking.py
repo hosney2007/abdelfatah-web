@@ -1,10 +1,13 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, redirect, url_for,render_template
 from models.schedaule import Schedule
 from models.branch import Branch
 from models.course import Course
+from models.booking import Booking
+from extinsion import db
 
 booking = Blueprint("booking" ,__name__)
 
+#============GET GROUPS====///
 @booking.route("/booking/schedules")
 def get_schedules():
         
@@ -30,5 +33,35 @@ def get_schedules():
                        f"{schedule.day2} {schedule.time2} "
              })
      return jsonify(data)
+
+#========ADMIN BOOKINGS======///
+@booking.route("/admin/booking", methods=["POST", "GET"])
+def admin_booking():
+    bookings = Booking.query.all()
+    return render_template("admin/bookings.html" ,booking=bookings, name="Bookings")
+
+#=======APPROVE BOOKING===///
+@booking.route("/admin/booking/<int:booking_id>/approve")
+def approve_booking(booking_id):
+    booking = Booking.query.get_or_404(booking_id)
+    booking.status = "approved"
+    db.session.commit()
+    return redirect(url_for("booking.admin_booking"))
+
+#======[DELETE]====//
+@booking.route("/admin/booking/<int:booking_id>/delete")
+def delete_booking(booking_id):
+    booking = Booking.query.get_or_404(booking_id)
+    db.session.delete(booking)
+    db.session.commit()
+    return redirect(url_for("booking.admin_booking"))
+
+
+
+
+         
+
+
+
 
 

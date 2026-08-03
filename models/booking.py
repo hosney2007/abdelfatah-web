@@ -1,13 +1,20 @@
 from extinsion import db
 
-class Schedule(db.Model):
+class Booking(db.Model):
     __tablename__ ="bookings"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user_id"), nullable=False )
-    course_id = db.Column(db.Integer, db.ForeignKey("courses_id"), nullable=False )
-    schedule_id = db.Column(db.Integer, db.ForeignKey("branches_id"), nullable=False )
-    status = db.Column(db.String(20), default="pending" ,nullable=False)
+    student_name = db.Column(db.String(100), nullable=False)
+    student_number = db.Column(db.String(20), nullable=False)
+    parent_number = db.Column(db.String(20), nullable=False)
+    grade = db.Column(db.String(10), nullable=False)
 
-user = db.relationship("User", backref="bookings")
-course = db.relationship("Course", backref="bookings")
-schedule = db.relationship("Schedule", backref="bookings")
+    course_id = db.Column(db.Integer, db.ForeignKey("course.id"), nullable=False )
+    schedule_id = db.Column(db.Integer, db.ForeignKey("schedule.id"), nullable=False )
+    branch_id = db.Column(db.Integer, db.ForeignKey("branches.id"), nullable=False )
+    mode = db.Column(db.String(20), nullable=False)
+    status = db.Column(db.String(20), default="pending" ,nullable=False)
+    
+    branch = db.relationship("Branch", backref="bookings")
+    course = db.relationship("Course", backref="bookings")
+    schedule = db.relationship("Schedule", backref="bookings")
+

@@ -6,6 +6,7 @@
     <title>{{ name }}</title>
     <link rel="stylesheet" href="{{url_for('static' , filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 </head>
@@ -28,13 +29,51 @@
            <li><a href="/booking">BOOKING</a></li> 
            <li><a href="/contact">CONTACT</a></li> 
         </ul>
-        <a href="https://wa.me/201287951523" class="btn-nav"> whatsapp</a>
 
+        {%if current_user.is_authenticated %}
+        
+            <a href="/dashboard" class="btn-nav">My Account</a>
+        
+        {%else%}
+        <li>
+            <a href="{{url_for('auth.login')}}">Login/Register</a>
+        </li>
+        {%endif%}
+
+
+        
     </nav>
-
     {% block body %}
     {% endblock %}
+
+
+<div class="toast-container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="toast {{ category }}">
+
+                    {{ message }}
+
+                    <span class="close-toast">&times;</span>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+</div>
+
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"> </script>
     <script src="{{url_for('static', filename='java/script.js')}}"></script>
+
+
 </body>
 </html>

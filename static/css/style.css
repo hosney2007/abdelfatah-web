@@ -11,7 +11,7 @@
 :root{
     /*main colors*/
     --primary-color:#061123;
-    --secondary-color:#fca311;
+    --secondary-color:#d4af37;
     --background-color:#dee2e6;
 
     /*extra colors*/
@@ -139,6 +139,7 @@ section{
 }
 
 .navbar{
+    background: var(--primary-color);
     position: fixed;
     top: 0;
     left: 0;
@@ -161,7 +162,7 @@ section{
     list-style: none;
 }
 .nav_links a{
-    color: var(--white);
+    color: var(--secondary-color);
     font-size: 17px;
     font-weight: 600;
     transition: var(--trnasition);
@@ -506,7 +507,7 @@ hr{
 }
 
 .st-card{
-    background: linear-gradient(180deg, #fca311,#e9b759);
+    background: linear-gradient(180deg, #D4AF37,#eac240);
     text-align: center;
     padding: 40px 20px;
     border-radius: var(--radius);
@@ -531,7 +532,7 @@ hr{
 
 /*CTA*/
 .cta{
-    background: linear-gradient(135deg, #061123, #fca311);;
+    background: linear-gradient(135deg, #061123, #D4AF37);
     text-align: center;
     color: var(--white);
     border-radius: 30px;
@@ -721,7 +722,7 @@ hr{
     margin: 0 auto;
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #fca311;
+    color: var(--secondary-color);
 }
 
 /*cards*/
@@ -756,7 +757,7 @@ hr{
 
 }
 .card p{
-    color: #fca311;
+    color: var(--secondary-color);
     line-height: 1.8;
     margin-bottom: 30px;
 }
@@ -771,7 +772,7 @@ hr{
 
 }
 .card .btn:hover{
-    background: #fca311;
+    background: var(--secondary-color);
 }
 
 /*==========================================================================================================*/
@@ -976,7 +977,7 @@ hr{
     border-color: rgba(252, 163, 17, .45);
 }
 .faq-container details[open]{
-    border-color: #fca311;
+    border-color: var(--secondary-color);
     box-shadow: var(--shadow);
 }
 .faq-container summary{
@@ -1005,7 +1006,7 @@ hr{
     transform: rotate(45deg);
 }
 .faq-container summary:hover{
-    color: #fca311;
+    color: var(--secondary-color);
 }
 .faq-container p{
     padding: 0 28px 2px;
@@ -1362,7 +1363,7 @@ hr{
 
 }
 .booking-content span{
-    color: #ff9d2f;
+    color: var(--secondary-color);
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -1386,10 +1387,15 @@ hr{
 .booking-form{
     max-width: 1000px;
     margin: auto;
-    background: #fff;
+    background: var(--primary-color);
     border-radius: 30px;
     padding: 60px;
     box-shadow: var(--shadow);
+}
+.booking-form h1{
+    text-align: center;
+    color: var(--secondary-color);
+    margin-bottom: 25px;
 }
 .form-grid{
     display: grid;
@@ -1404,7 +1410,7 @@ hr{
 .input-box label{
     font-size: 15px;
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--secondary-color);
     margin-bottom: 10px;
 }
 .input-box input,
@@ -1412,12 +1418,12 @@ hr{
 .input-box textarea{
     width: 100%;
     padding: 16px 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--secondary-color);
     border-radius: 14px;
     font-size: 16px;
     outline: none;
     transition: var(--trnasition);
-    background: #fff;
+    background: var(--background-color);
 
 }
 .input-box textarea{
@@ -1433,10 +1439,10 @@ hr{
 .study-mode{
     margin-top: 35px;
 }
-.study-mode>label{
+.study-mode label{
     display: block;
     margin-bottom: 15px;
-    color: var(--primary-color);
+    color: var(--secondary-color);
     font-weight: 600;
 }
 .radio-group{
@@ -1444,6 +1450,7 @@ hr{
     gap: 25px;
 }
 .radio-group label{
+    color: var(--secondary-color);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1516,20 +1523,21 @@ hr{
 
 
 
-
-
-
-
 @media (max-width:600px){
     .navbar{
         padding: 15px 20px;
+        display: flex;
+        align-items: center;
+    }
+    .logo{
+        order: 1;
     }
     .nav_links{
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
-        background: linear-gradient(180deg ,#061123,#fca311);
+        background: linear-gradient(180deg ,#061123,#D4AF37);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1542,7 +1550,12 @@ hr{
         transition: var(--trnasition);
     }
     .btn-nav{
-        display: none;
+        order: 2;
+        display: flex;
+        padding: 5px 10px;
+        border-radius: 50px;
+        margin-left: auto;
+        margin-right: 10px;
     }
     .nav_links.active{
         opacity: 1;
@@ -1555,6 +1568,7 @@ hr{
         color: var(--white);
         font-size: 35px;
         cursor: pointer;
+        order: 3;
     }
     /*hero homepagr*/
     .hero{
@@ -1786,4 +1800,81 @@ hr{
         
 }
 
+.toast-container{
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 9999;
+}
 
+.toast{
+
+    min-width: 320px;
+
+    margin-bottom:15px;
+
+    padding:18px 22px;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    font-weight:600;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+    animation:toastIn 0.3s ease;
+
+}
+
+.toast.success{
+    background:#2ecc71;
+}
+
+.toast.danger{
+    background:#e74c3c;
+}
+
+.toast.warning{
+    background:#f39c12;
+}
+
+.toast.info{
+    background:#3498db;
+}
+
+.close-toast{
+
+    cursor:pointer;
+
+    margin-left:20px;
+
+    font-size:20px;
+
+}
+
+@keyframes toastIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(100%);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}

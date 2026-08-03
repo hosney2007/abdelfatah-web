@@ -1,21 +1,24 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,current_app
 from flask_login import  current_user, login_required
 from extinsion import db
 from models.course import Course
 from models.branch import Branch
 from models.schedaule import Schedule
+from werkzeug.utils import secure_filename
+import os
+
 
 admin = Blueprint("admin" ,__name__)
-# dashboard
+# ===================admindashboard==========////
 @admin.route("/admin")
 @login_required
 def admin_dashboard():
     if current_user.role != "admin":
         return "ACCESS DENIED", 403
     courses = Course.query.filter_by( is_active=True).all()
-    return render_template("admin/admin-dashboard.html" ,user=current_user, course=courses)
+    return render_template("admin/admin-dashboard.html" ,user=current_user, course=courses, name="Admin")
 
-#addd coueses
+#==============addd courses==================////
 
 @admin.route("/admin/add-course", methods=["GET", "POST"])
 @login_required
@@ -23,28 +26,28 @@ def add_course():
     if current_user.role != "admin":
         return "ACCESS DENIED", 403
     if request.method == "POST":
-
+        image = request.files["image"]
+        filename = secure_filename(image.filename)
+        image.save(os.path.join(
+                current_app.config["UPLOAD_FOLDER"],
+                filename
+            ))
+        
         title = request.form["title"]
         description = request.form["description"]
-        course_type = request.form["course_type"]
-        price = request.form.get("price")
-        if price:
-            price =float(price)
-        else:
-            price = None
+        course_type = request.form["course_type"]    
         course = Course(
             title = title,
             description= description,
             course_type=course_type,
-            price=price
+            image=filename
         )  
         db.session.add(course)
         db.session.commit()
         return redirect(url_for("admin.admin_dashboard"))
-    return render_template("admin/add-course.html")      
+    return render_template("admin/add-course.html", name="add Course")      
 
 #edit courses
-
 @admin.route("/admin/edit-course/<int:course_id>", methods=["GET", "POST"])
 @login_required
 def edit_course( course_id ):
@@ -67,14 +70,13 @@ def edit_course( course_id ):
                price = None
         else:
             course.price = None
-        print("price:" ,course.price)
         db.session.commit()
         print("price:" ,course.price)
         return redirect(url_for("admin.admin_dashboard"))
-    return render_template("admin/edit-course.html", course=course)   
+    return render_template("admin/edit-course.html", course=course, name="Edit Course")   
 
 
-
+#=================delete courses=========//////
 @admin.route("/admin/delete-course/<int:course_id>", methods=["GET", "POST"])
 @login_required
 def delete_course( course_id ):
@@ -85,8 +87,8 @@ def delete_course( course_id ):
     db.session.commit()
     return redirect(url_for("admin.admin_dashboard"))
 
-#=============================================================================
-
+#==============================groups===============================================
+#=========add group=========///
 @admin.route("/admin/add-group", methods=["GET", "POST"])
 @login_required
 def add_group():
@@ -122,10 +124,10 @@ def add_group():
         db.session.add(schedule)
         db.session.commit()
         return redirect(url_for("admin.admin_dashboard"))
-    return render_template("admin/add-group.html", course=courses, branches=branches)      
+    return render_template("admin/add-group.html", course=courses, branches=branches, name="Add Group")      
 
 
-
+#====branch==////
 
 @admin.route("/admin/add-branch", methods=["GET", "POST"])
 @login_required

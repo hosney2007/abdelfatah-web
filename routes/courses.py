@@ -3,6 +3,11 @@ from models.course import Course
 
 course = Blueprint("course", __name__)
 
+@course.route("/admin/course", methods=["POST", "GET"])
+def admin_booking():
+    course = Course.query.all()
+    return render_template("admin/course.html" ,course=course, name= "Courses")
+
 @course.route("/courses/offline")
 def offline_courses():
     courses = Course.query.filter_by(course_type="offline").all()
@@ -13,7 +18,3 @@ def online_courses():
     courses = Course.query.filter_by(course_type="online").all()
     return render_template("online.html", course=courses)
 
-@course.route("/courses/recorded")
-def recorded_courses():
-    courses = Course.query.filter_by(course_type="recorded").all()
-    return render_template("recorded.html", course=courses)

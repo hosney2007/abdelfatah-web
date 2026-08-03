@@ -11,5 +11,5 @@ class Schedule(db.Model):
     time2 = db.Column(db.String(20), nullable=False)
     level = db.Column(db.String(30), nullable=False)
     mode = db.Column(db.String(20), nullable=False)
-    course = db.relationship("Course", backref="schedules")
+    course = db.relationship("Course", backref="schedule")
    

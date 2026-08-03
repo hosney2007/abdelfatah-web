@@ -18,7 +18,7 @@
 <section class="booking-form-section">
     <div class="container">
         <form class="booking-form" method="post">
-">    
+            <h1>Booking form</h1>  
             <div class="form-grid">
             <div class="input-box">
                 <label>Student Name</label>
@@ -34,7 +34,7 @@
             </div>
             <div class="input-box">
                 <label>Student Grade</label>
-                <select required>
+                <select name="grade" required>
                     <option value="">Select Grade</option>
                     <option value="10"> Grade 10</option>
                     <option value="11">Grade 11</option>
@@ -80,9 +80,9 @@
                 {%endfor%}   
             </select>
         </div>
-        <div class="input-box" id="schadule-box">
+        <div class="input-box" id="schedule-box">
             <label> Avalibale Groups</label>
-            <select id="schadule" name="schadule_id" required>
+            <select id="schedule" name="schedule_id" required>
                 <option value=""> Choose Group</option>               
             </select>
         </div>

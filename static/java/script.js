@@ -1,6 +1,13 @@
+console.log("SCRIPT LOADED")
+
+
+
 const navbar = document.querySelector(".navbar");
+if (document.body.scrollHeight <= window.innerHeight){
+    navbar.classList.add("scrolled");
+}
 window.addEventListener("scroll", function () {
-    const navbar = document.getElementById("navbar");
+    const navbar = document.querySelector(".navbar");
     if (window.scrollY > 50){
         navbar.classList.add("scrolled");
     }else{
@@ -60,9 +67,6 @@ AOS.init({
     easing:"ease-in-out",
     offset: 100
 })
-
-
-
 
 
 
@@ -210,3 +214,33 @@ offline.addEventListener("change", loadSchedules);
 online.addEventListener("change", loadSchedules);
 
 branch.addEventListener("change", loadSchedules);
+
+
+
+document.querySelectorAll(".toast").forEach(function(toast){
+
+    setTimeout(function(){
+
+        toast.style.opacity="0";
+
+        toast.style.transform="translateX(120%)";
+
+        setTimeout(function(){
+
+            toast.remove();
+
+        },300);
+
+    },5000);
+
+});
+
+document.querySelectorAll(".close-toast").forEach(function(btn){
+
+    btn.onclick=function(){
+
+        this.parentElement.remove();
+
+    }
+
+});

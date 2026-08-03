@@ -1,33 +1,38 @@
-<h2>courses</h2>
-<a href="/admin/add-course"> + Add course</a>
-<div>
-    {% for course in course %}
-      <div>
-        <h3>
-            {{course.title}}
-        </h3>
-        <p>{{ course.description}}</p>
-        <p> type : {{course.course_type}}</p>
-        {% if course.course_type == "recorded" %}
-            <p> price: {{course.price}}</p>
-        {%else %}
-            <p> Contact/Book</p>   
-        {% endif %}    
-        <div>
-            <a href="{{ url_for('admin.edit_course', course_id=course.id)}}">edit</a>
-            <form
-            method="post"
-             action="{{ url_for('admin.delete_course', course_id=course.id)}}"
-             style="display: inline;"
-             >
-            <button type="submit">
-                delete
+{% extends "base.html" %}
 
-            </button>
-        </form>
-        </div>
-      </div>
-    {% else %}  
-        <p>no courses yet</p>
-    {% endfor %}      
+{% block body %}
+
+<div class="admin-container">
+    <h1 class="dashboard-title"> Admin Dashboaed</h1>
+    <div class="dashboard-grid">
+        <a href="/admin/course" class="dashboard-card">
+            <i class="fa-solid fa-book"></i>
+            <h3>Courses</h3>
+        </a>
+        <a href="/admin/branch" class="dashboard-card">
+            <i class="fa-solid fa-building"></i>
+            <h3>Branches</h3>
+        </a>
+        <a href="/admin/schedule" class="dashboard-card">
+            <i class="fa-solid fa-calendar-days"></i>
+            <h3>Groups</h3>
+        </a>
+        <a href="/admin/booking" class="dashboard-card">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <h3>Bookings</h3>
+        </a>        
+        <a href="/admin/recorded" class="dashboard-card">
+            <i class="fa-solid fa-video"></i>
+            <h3>Recorded</h3>
+        </a>
+        <a href="/admin/orders" class="dashboard-card">
+            <i class="fa-solid fa-credit-card"></i>
+            <h3>Orders</h3>
+        </a> 
+        <button type="submit">
+          <a href="/logout"> logout</a>
+      </button>       
+    </div>
+
 </div>
+{%endblock%}
