@@ -1,6 +1,3 @@
-console.log("SCRIPT LOADED")
-
-
 
 const navbar = document.querySelector(".navbar");
 if (document.body.scrollHeight <= window.innerHeight){
@@ -231,7 +228,7 @@ document.querySelectorAll(".toast").forEach(function(toast){
 
         },300);
 
-    },5000);
+    },3000);
 
 });
 

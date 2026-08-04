@@ -9,7 +9,7 @@ from routes.booking import booking
 from models.booking import Booking
 from models.branch import Branch
 from routes.admin import admin
-from extinsion import db, login_manager
+from extinsion import db, login_manager, mail
 import click
 from werkzeug.security import generate_password_hash
 from models.course import Course
@@ -52,6 +52,7 @@ app.config["SECRET_KEY"] = "YOUR SECRET KEY"
 app.config.from_object(Config)
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 db.init_app(app)
+mail.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
 @login_manager.user_loader

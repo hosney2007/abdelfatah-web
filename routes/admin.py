@@ -6,15 +6,15 @@ from models.branch import Branch
 from models.schedaule import Schedule
 from werkzeug.utils import secure_filename
 import os
+from utils.decorators import admin_required
 
 
 admin = Blueprint("admin" ,__name__)
 # ===================admindashboard==========////
 @admin.route("/admin")
 @login_required
+@admin_required
 def admin_dashboard():
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     courses = Course.query.filter_by( is_active=True).all()
     return render_template("admin/admin-dashboard.html" ,user=current_user, course=courses, name="Admin")
 
@@ -22,9 +22,8 @@ def admin_dashboard():
 
 @admin.route("/admin/add-course", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_course():
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     if request.method == "POST":
         image = request.files["image"]
         filename = secure_filename(image.filename)
@@ -50,9 +49,8 @@ def add_course():
 #edit courses
 @admin.route("/admin/edit-course/<int:course_id>", methods=["GET", "POST"])
 @login_required
+@admin_required
 def edit_course( course_id ):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     course = Course.query.get_or_404(course_id)
     if request.method == "POST":
 

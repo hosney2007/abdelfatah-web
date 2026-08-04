@@ -786,7 +786,7 @@ hr{
     overflow: hidden;
     position: relative;
 }
-.about-hero .contanier{
+.about-hero .container{
     display: flex;
     align-items: center;
     justify-content: space-between;

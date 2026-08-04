@@ -23,6 +23,20 @@
          >        
          <button type="submit">login</button>
       </form>
+      {% if show_resend %}
+
+      <form action="{{ url_for('auth.resend_verification') }}" method="POST">
+
+       <input
+        type="hidden"
+        name="email"
+        value="{{ email }}"
+        >
+       <button type="submit" class="btn-auth">
+        Resend Verification Email
+      </button>
+      </form>
+     {% endif %}
       <p>
         Dont't have an account?
         <a href="/register">

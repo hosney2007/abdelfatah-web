@@ -1,8 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,flash,current_app
 from werkzeug.security import generate_password_hash , check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 from models.booking import Booking
 from models.purchase import Purchase
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer,BadSignature,SignatureExpired
+from extinsion import mail
+
 
 
 
@@ -10,6 +14,65 @@ from extinsion import db
 from models.user import User
 
 auth = Blueprint("auth" ,__name__)
+
+
+
+def generate_verification_token(email):
+
+    serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+
+    return serializer.dumps(
+        email,
+        salt="email-confirm"
+    )
+
+
+def send_verification_email(user):
+
+    token = generate_verification_token(user.email)
+
+    verify_url = url_for(
+        "auth.verify_email",
+        token=token,
+        _external=True
+    )
+
+    msg = Message(
+
+        subject="Verify your Abdelfatah Academy account",
+
+        recipients=[user.email]
+
+    )
+
+    msg.body = f"""
+Hello {user.name},
+
+Thank you for registering at Abdelfatah Academy.
+
+Please click the link below to verify your email:
+
+{verify_url}
+
+If you did not create this account, simply ignore this email.
+
+Regards,
+Abdelfatah Academy
+"""
+    print("current_app.config")
+    mail.send(msg)
+
+
+
+
+
+
+
+
+
+
+
+
 
 #=========REGISTER======///
 @auth.route("/register", methods=["GET", "POST"])
@@ -21,7 +84,8 @@ def register():
 
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            return "Email already registered"
+            flash("Email already registered","danger")
+            return redirect(url_for("auth.register"))
         hashed_password = generate_password_hash(password)
         user = User(
             name=name,
@@ -31,8 +95,80 @@ def register():
 
         db.session.add(user)
         db.session.commit()
+        send_verification_email(user)
+        flash( "Account created successfully! Please check your email to verify your account.","success")
         return redirect(url_for("auth.login"))
     return render_template("register.html", name="Register")
+
+#======verify====///
+@auth.route("/verify-email/<token>")
+def verify_email(token):
+
+    serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+
+    try:
+
+        email = serializer.loads(
+            token,
+            salt="email-confirm",
+            max_age=3600
+        )
+
+    except SignatureExpired:
+
+        flash("Verification link has expired.", "danger")
+        return redirect(url_for("auth.login"))
+
+    except BadSignature:
+
+        flash("Invalid verification link.", "danger")
+        return redirect(url_for("auth.login"))
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+
+        flash("Account not found.", "danger")
+        return redirect(url_for("auth.login"))
+
+    if user.is_verified:
+
+        flash("Your account is already verified.", "info")
+        return redirect(url_for("auth.login"))
+
+    user.is_verified = True
+
+    db.session.commit()
+
+    flash("Your email has been verified successfully. You can now login.", "success")
+
+    return redirect(url_for("auth.login"))
+
+@auth.route("/resend-verification", methods=["POST"])
+def resend_verification():
+
+    email = request.form.get("email")
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+
+        flash("Account not found.", "danger")
+
+        return redirect(url_for("auth.login"))
+
+    if user.is_verified:
+
+        flash("Your account is already verified.", "info")
+
+        return redirect(url_for("auth.login"))
+
+    send_verification_email(user)
+
+    flash("Verification email sent successfully.", "success")
+
+    return redirect(url_for("auth.login"))
+
 
 #=========LOGIN========////
 @auth.route("/login", methods=["GET", "POST"])
@@ -42,12 +178,82 @@ def login():
         password = request.form["password"]   
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
+            if not user.is_verified:
+                flash("Please verify your email first.","warning")
+                return redirect(url_for("auth.login"))
             login_user(user)
             if user.role == "admin":
+                flash("welcome back!","success")
                 return redirect(url_for("admin.admin_dashboard"))
+            flash("welcome back!","success")
             return redirect(url_for("auth.dashboard"))
-        return "invaild email or password"
-    return render_template("login.html", name="Login")
+        flash("Invaild email or password","danger")
+        return redirect(url_for("auth.login"))
+    return render_template("login.html", name="Login", show_resend=True)
+
+
+@auth.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+
+        user = User.query.filter_by(email=email).first()
+
+        if not user:
+            flash("No account found with this email.", "danger")
+            return redirect(url_for("auth.forgot_password"))
+
+        return redirect(url_for("auth.reset_password", user_id=user.id))
+
+    return render_template("forgot_password.html", name="Forgot Password")
+
+
+@auth.route("/reset-password/<int:user_id>", methods=["GET", "POST"])
+def reset_password(user_id):
+
+    user = User.query.get_or_404(user_id)
+
+    if request.method == "POST":
+
+        password = request.form["password"]
+        confirm = request.form["confirm"]
+
+        if password != confirm:
+
+            flash("Passwords do not match.", "danger")
+            return redirect(url_for("auth.reset_password", user_id=user.id))
+
+        user.password = generate_password_hash(password)
+
+        db.session.commit()
+
+        flash("Password changed successfully.", "success")
+
+        return redirect(url_for("auth.login"))
+
+    return render_template(
+        "reset_password.html",
+        user=user,
+        name="Reset Password"
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #======DASHBOARD=====///
 @auth.route("/dashboard")
