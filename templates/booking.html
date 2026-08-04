@@ -18,6 +18,8 @@
 <section class="booking-form-section">
     <div class="container">
         <form class="booking-form" method="post">
+            <input type="hidden", name="csrf_token", value="{{csrf_token()}}">
+
             <h1>Booking form</h1>  
             <div class="form-grid">
             <div class="input-box">

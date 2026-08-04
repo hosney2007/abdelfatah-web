@@ -84,10 +84,14 @@ def delete_course( id ):
     if current_user.role != "admin":
         return "ACCESS DENIED", 403
     recorded = Recorded.query.get_or_404(id)
+    if recorded.purchase:
+        flash("you can't delete this course because it has orders","danger")
+        return redirect(url_for("recorded.recorded_courses"))    
     db.session.delete(recorded)
     db.session.commit()
     return redirect(url_for("recorded.recorded_courses"))
 #===============================LESSONS=====================================================///
+
 #==========LESSON VIEW====///
 @recorded.route("/admin/recorded/<int:id>/lesson", methods=["POST", "GET"])
 def lessons(id):
@@ -99,6 +103,7 @@ def lessons(id):
     ).order_by(Lessons.lesson_order).all()
     return render_template("admin/lessons.html" ,recorded=recorded ,lesson=lessons ,name= "recorded")
 #======ADD LESSON====///
+
 @recorded.route("/admin/recorded/<int:id>/lesson/add", methods=["GET", "POST"])
 @login_required
 def add_lesson(id):
@@ -134,6 +139,7 @@ def edit_lesson( id ):
         flash("recorded course updated successfully")
         return redirect(url_for("recorded.lessons", id=lesson.recorded_course_id))
     return render_template("admin/edit-lesson.html", lesson=lesson, name="Edit lesson") 
+
 
 #==============DELETE LESSON======///
 @recorded.route("/admin/lesson/delete/<int:id>", methods=["GET", "POST"])
@@ -176,7 +182,7 @@ def reject_order(id):
     return redirect(url_for("recorded.orders"))
 
 
-#==============DELETE LESSON======///
+#==============DELETE order======///
 @recorded.route("/admin/orders/<int:id>/delete", methods=["GET", "POST"])
 @login_required
 def delete_order( id ):
@@ -259,7 +265,7 @@ def course_lessons(course_id):
     purchase = Purchase.query.filter_by(
         user_id=current_user.id,
         recorded_course_id=course_id
-    ).first()
+    ).first_or_404()
 
     if not purchase:
         flash("You must purchase this course first.", "danger")
@@ -283,7 +289,7 @@ def course_lessons(course_id):
         lesson = Lessons.query.filter_by(
             id=lesson_id,
             recorded_course_id=course_id
-        ).first()
+        ).first_or_404()
 
         if lesson is None:
             lesson = lessons[0]

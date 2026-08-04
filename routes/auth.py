@@ -5,7 +5,7 @@ from models.booking import Booking
 from models.purchase import Purchase
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer,BadSignature,SignatureExpired
-from extinsion import mail
+from extinsion import mail,limiter
 
 
 
@@ -63,6 +63,65 @@ Abdelfatah Academy
     mail.send(msg)
 
 
+def generate_reset_token(email):
+    serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+
+    return serializer.dumps(
+        email,
+        salt="password-reset"
+    )
+
+#=======
+
+def verify_reset_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+
+    try:
+        email = serializer.loads(
+            token,
+            salt="password-reset",
+            max_age=expiration
+        )
+
+        return email
+
+    except (BadSignature, SignatureExpired):
+        return None
+#=========
+
+def send_reset_password_email(user):
+
+    token = generate_reset_token(user.email)
+
+    reset_url = url_for(
+        "auth.reset_password",
+        token=token,
+        _external=True
+    )
+
+    msg = Message(
+        subject="Reset your Abdelfatah Academy password",
+        recipients=[user.email]
+    )
+
+    msg.body = f"""
+Hello {user.name},
+
+We received a request to reset your password.
+
+Click the link below to create a new password:
+
+{reset_url}
+
+This link will expire in 1 hour.
+
+If you didn't request this, you can safely ignore this email.
+
+Regards,
+Abdelfatah Academy
+"""
+
+    mail.send(msg)
 
 
 
@@ -76,6 +135,7 @@ Abdelfatah Academy
 
 #=========REGISTER======///
 @auth.route("/register", methods=["GET", "POST"])
+@limiter.limit("3 per minute")
 def register():
     if request.method == "POST":
         name = request.form["name"]
@@ -145,6 +205,7 @@ def verify_email(token):
     return redirect(url_for("auth.login"))
 
 @auth.route("/resend-verification", methods=["POST"])
+@limiter.limit("2 per minute")
 def resend_verification():
 
     email = request.form.get("email")
@@ -172,6 +233,7 @@ def resend_verification():
 
 #=========LOGIN========////
 @auth.route("/login", methods=["GET", "POST"])
+@limiter.limit("5 per minute")
 def login():
     if request.method == "POST":
         email = request.form["email"]
@@ -193,6 +255,7 @@ def login():
 
 
 @auth.route("/forgot-password", methods=["GET", "POST"])
+@limiter.limit("3 per minute")
 def forgot_password():
 
     if request.method == "POST":
@@ -201,19 +264,33 @@ def forgot_password():
 
         user = User.query.filter_by(email=email).first()
 
-        if not user:
-            flash("No account found with this email.", "danger")
-            return redirect(url_for("auth.forgot_password"))
+        if user:
+            send_reset_password_email(user)
 
-        return redirect(url_for("auth.reset_password", user_id=user.id))
+        flash(
+            "If this email exists, a password reset link has been sent.",
+            "info"
+        )
 
-    return render_template("forgot_password.html", name="Forgot Password")
+        return redirect(url_for("auth.login"))
 
+    return render_template(
+        "forgot_password.html",
+        name="Forgot Password"
+    )
 
-@auth.route("/reset-password/<int:user_id>", methods=["GET", "POST"])
-def reset_password(user_id):
+#=============
 
-    user = User.query.get_or_404(user_id)
+@auth.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+
+    email = verify_reset_token(token)
+
+    if not email:
+        flash("This reset link is invalid or has expired.", "danger")
+        return redirect(url_for("auth.forgot_password"))
+
+    user = User.query.filter_by(email=email).first_or_404()
 
     if request.method == "POST":
 
@@ -221,9 +298,12 @@ def reset_password(user_id):
         confirm = request.form["confirm"]
 
         if password != confirm:
-
             flash("Passwords do not match.", "danger")
-            return redirect(url_for("auth.reset_password", user_id=user.id))
+            return redirect(url_for("auth.reset_password", token=token))
+
+        if len(password) < 8:
+            flash("Password must be at least 8 characters.", "danger")
+            return redirect(url_for("auth.reset_password", token=token))
 
         user.password = generate_password_hash(password)
 
@@ -235,7 +315,6 @@ def reset_password(user_id):
 
     return render_template(
         "reset_password.html",
-        user=user,
         name="Reset Password"
     )
 
@@ -259,6 +338,8 @@ def reset_password(user_id):
 @auth.route("/dashboard")
 @login_required
 def dashboard():
+    if current_user.role == "admin":
+        return redirect(url_for("admin.admin_dashboard"))
 
     # بيانات الطالب
     user = current_user

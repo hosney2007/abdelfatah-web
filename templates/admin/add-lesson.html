@@ -10,6 +10,8 @@
         </div>
         <div class="booking-form">
             <form method="post" class="admin-form">
+                <input type="hidden", name="csrf_token", value="{{csrf_token()}}">
+
                <div class="input-box">
                    <label class="form-label">Lesson Name</label>
                    <input

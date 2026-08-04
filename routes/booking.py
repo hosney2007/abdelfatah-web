@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, redirect, url_for,render_template
+from flask import Blueprint, jsonify, request, redirect, url_for,render_template,flash
 from models.schedaule import Schedule
 from models.branch import Branch
 from models.course import Course
@@ -52,6 +52,7 @@ def approve_booking(booking_id):
 @booking.route("/admin/booking/<int:booking_id>/delete")
 def delete_booking(booking_id):
     booking = Booking.query.get_or_404(booking_id)
+            
     db.session.delete(booking)
     db.session.commit()
     return redirect(url_for("booking.admin_booking"))

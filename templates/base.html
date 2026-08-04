@@ -72,6 +72,7 @@
 
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"> </script>
     <script src="{{url_for('static', filename='java/script.js')}}"></script>
+    <script> const csrf_token = "{{ csrf_token() }}" </script>
 
 
 </body>

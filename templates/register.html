@@ -9,6 +9,8 @@
         <h1>Creat Account</h1>
         <p> creat your student account </p>
       <form method="post">
+           <input type="hidden", name="csrf_token", value="{{csrf_token()}}">
+
           <input 
           type="text"
           name="name"

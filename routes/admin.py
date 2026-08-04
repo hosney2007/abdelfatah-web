@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for,current_app
+from flask import Blueprint, render_template, request, redirect, url_for,current_app,flash
 from flask_login import  current_user, login_required
 from extinsion import db
 from models.course import Course
@@ -81,6 +81,10 @@ def delete_course( course_id ):
     if current_user.role != "admin":
         return "ACCESS DENIED", 403
     course = Course.query.get_or_404(course_id)
+    if course.schedule:
+        flash("you can't delete this course because it has groups","danger")
+        return redirect(url_for("course.courses"))
+        
     db.session.delete(course)
     db.session.commit()
     return redirect(url_for("admin.admin_dashboard"))

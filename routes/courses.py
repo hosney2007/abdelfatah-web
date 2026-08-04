@@ -4,7 +4,7 @@ from models.course import Course
 course = Blueprint("course", __name__)
 
 @course.route("/admin/course", methods=["POST", "GET"])
-def admin_booking():
+def courses():
     course = Course.query.all()
     return render_template("admin/course.html" ,course=course, name= "Courses")
 

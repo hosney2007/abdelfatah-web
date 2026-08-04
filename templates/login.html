@@ -9,6 +9,8 @@
         <h1> Welcome Back</h1>
         <p>login to your account</p>
       <form method="post">
+           <input type="hidden", name="csrf_token", value="{{csrf_token()}}">
+
          <input 
          type="email"
          name="email"
@@ -22,6 +24,7 @@
          required
          >        
          <button type="submit">login</button>
+         <a href="{{url_for('auth.forgot_password')}}"> Forgot Password</a>
       </form>
       {% if show_resend %}
 

@@ -6,10 +6,11 @@ from routes.courses import course
 from routes.scheddules import schedule
 from routes.recorded import recorded
 from routes.booking import booking
+from models.schedaule import Schedule
 from models.booking import Booking
 from models.branch import Branch
 from routes.admin import admin
-from extinsion import db, login_manager, mail
+from extinsion import db, login_manager, mail,csrf,limiter
 import click
 from werkzeug.security import generate_password_hash
 from models.course import Course
@@ -40,7 +41,8 @@ def create_admin(name,email,password):
          name=name,
          email=email,
          password=generate_password_hash(password),
-         role="admin"
+         role="admin",
+         is_verified = True
      )
     db.session.add(admin)
     db.session.commit()
@@ -52,7 +54,9 @@ app.config["SECRET_KEY"] = "YOUR SECRET KEY"
 app.config.from_object(Config)
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 db.init_app(app)
+csrf.init_app(app)
 mail.init_app(app)
+limiter.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
 @login_manager.user_loader
@@ -83,6 +87,18 @@ def curses():
 @app.route("/booking", methods=["POST", "GET"])
 def booking():
     if request.method == "POST":
+         phone = request.form["student_number"]
+         schedule = Schedule.query.get_or_404(
+             request.form["schedule_id"]
+         )
+         existing_booking = Booking.query.filter_by(
+             schedule_id=schedule.id,
+            student_number = phone
+         ).first()
+         if existing_booking:
+             flash("You Have Already Booked this Group", "warning")
+             return redirect(url_for("booking"))
+
          booking=Booking(
           student_name = request.form["student_name"],
           student_number = request.form["student_number"],
