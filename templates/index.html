@@ -77,36 +77,78 @@
    <hr>
 
  <!-- sucssses story-->
-  <section class="success">
-    <div class="section-title">
-        <h2> Success Stories </h2>
-        <p>
+ <section class="success-section">
 
+    <div class="container">
 
-
-        </p>
-    </div>
-    <div class="slider">
-        <div class="stu-card">
-            <div class="stu-img">
-                <img src="{{ url_for('static', filename='image/hosney.jpeg')}}" alt="student name">
-            </div>
-            <h3>Mohamed Hosney</h3>
-            <span class="subjict"> SAT</span>
-            <div class="scores">
-                <span class="old-score"> 600</span>
-                <span class="arrow">→</span>
-                <span class="new-score">780</span>
-            </div>
-            <p class="student-mesg ">
-                "shokran gedn le mr abdelfatah mn ahsn el modrsen bgd w 3let awee fe el score bsbbo."
-
-            </p>
-
-            
+        <div class="section-title">
+            <h2>Success Stories</h2>
+            <p>Our Students' Achievements</p>
         </div>
+
+        <div class="swiper successSwiper">
+
+            <div class="swiper-wrapper">
+
+                {% for story in stories %}
+
+                <div class="swiper-slide">
+
+                    <div class="success-card">
+
+                        <img src="{{ url_for('static', filename='uploads/' ~ story.image) }}"
+                             alt="{{ story.student_name }}">
+
+                        <h3>{{ story.student_name }}</h3>
+
+                        <span class="subject">
+                            {{ story.subject }}
+                        </span>
+
+                        <div class="score-box">
+
+                            <div>
+                                <small>Before</small>
+                                <h4>{{ story.before_score }}</h4>
+                            </div>
+
+                            <div class="arrow">
+                                →
+                            </div>
+
+                            <div>
+                                <small>After</small>
+                                <h4>{{ story.after_score }}</h4>
+                            </div>
+
+                        </div>
+
+                        <div class="improvement">
+                            +{{ story.after_score - story.before_score }} Marks 🚀
+                        </div>
+
+
+                        <p class="review">
+                            ❝{{ story.review }}❞
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+        </div>
+
     </div>
-  </section>
+
+</section>
 
 <!--===============================================================================-->
 
@@ -122,25 +164,25 @@
     <div class="contanier">
         <div data-aos="zoom-in" data-aos-delay="100">
             <div class="st-card">
-               <h2 class="counter" data-target="1500">0</h2>
+               <h2 class="counter" data-target="1500" data-symbol="+">0</h2>
                <p>Students</p>
             </div>
         </div>
         <div data-aos="zoom-in" data-aos-delay="200">
              <div class="st-card" >
-               <h2 class="counter" data-target="10">0</h2>
+               <h2 class="counter" data-target="10" data-symbol="+">0</h2>
                <p> Years of Experience</p>
             </div>
         </div>
         <div data-aos="zoom-in" data-aos-delay="300">
              <div class="st-card" >
-               <h2 class="counter" data-target="95">0</h2>
+               <h2 class="counter" data-target="95" data-symbol="%">0</h2>
                <p>Success</p>
             </div>
         </div>
         <div data-aos="zoom-in" data-aos-delay="400">
            <div class="st-card" >
-               <h2 class="counter" data-target="3">0</h2>
+               <h2 class="counter" data-target="3" data-symbol="+">0</h2>
                <p>Branches</p>
             </div>
         </div>
@@ -238,6 +280,8 @@
 
         </div>
     </footer>
+
+
 
 
 

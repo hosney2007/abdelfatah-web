@@ -8,6 +8,7 @@ from routes.recorded import recorded
 from routes.booking import booking
 from models.schedaule import Schedule
 from models.booking import Booking
+from models.success_story import SuccessStory
 from models.branch import Branch
 from routes.admin import admin
 from extinsion import db, login_manager, mail,csrf,limiter
@@ -72,7 +73,12 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    return render_template('index.html', name = 'Home')
+    stories = SuccessStory.query.filter_by(
+        is_active=True
+    ).order_by(
+        SuccessStory.id.desc()
+    ).limit(6).all()
+    return render_template('index.html', name = 'Home', stories=stories)
 
 @app.route("/about")
 def about():

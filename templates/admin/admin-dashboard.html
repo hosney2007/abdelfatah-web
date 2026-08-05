@@ -3,33 +3,52 @@
 {% block body %}
 
 <div class="admin-container">
-    <h1 class="dashboard-title"> Admin Dashboaed</h1>
+    <h1 class="dashboard-title"> Admin Dashboard</h1>
     <div class="dashboard-grid">
-        <a href="/admin/course" class="dashboard-card">
+        <div class="dashboard-card" data-aos="zoom-in" data-aos-delay="100">
+            <a href="/admin/course">
             <i class="fa-solid fa-book"></i>
             <h3>Courses</h3>
-        </a>
-        <a href="/admin/branch" class="dashboard-card">
+           </a>
+        </div>
+        <div class="dashboard-card" data-aos="zoom-in" data-aos-delay="200">
+        <a href="/admin/branch">
             <i class="fa-solid fa-building"></i>
             <h3>Branches</h3>
         </a>
-        <a href="/admin/schedule" class="dashboard-card">
+        </div>
+        <div class="dashboard-card" data-aos="zoom-in" data-aos-delay="300">
+
+         <a href="/admin/schedule">
             <i class="fa-solid fa-calendar-days"></i>
             <h3>Groups</h3>
-        </a>
-        <a href="/admin/booking" class="dashboard-card">
+         </a>
+        </div>
+        <div class="dashboard-card" data-aos="zoom-in" data-aos-delay="400">
+         <a href="/admin/booking">
             <i class="fa-solid fa-clipboard-list"></i>
             <h3>Bookings</h3>
-        </a>        
-        <a href="/admin/recorded" class="dashboard-card">
+         </a>        
+        </div>
+        <div class="dashboard-card" data-aos="zoom-in" data-aos-delay="500">
+         <a href="/admin/recorded">
             <i class="fa-solid fa-video"></i>
             <h3>Recorded</h3>
-        </a>
-        <a href="/admin/orders" class="dashboard-card">
+         </a>
+        </div>
+        <div class="dashboard-card" data-aos="zoom-in" data-aos-delay="600">
+         <a href="/admin/orders">
             <i class="fa-solid fa-credit-card"></i>
             <h3>Orders</h3>
-        </a> 
-        <button type="submit">
+         </a>             
+        </div>
+        <div class="dashboard-card" data-aos="zoom-in" data-aos-delay="700">
+          <a href="{{url_for('admin.success_stories')}}">
+            <i class="fa-solid fa-credit-card"></i>
+            <h3>Success stories</h3>
+         </a> 
+        </div>
+        <button type="submit" class="btn">
           <a href="/logout"> logout</a>
       </button>       
     </div>

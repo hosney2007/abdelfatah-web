@@ -6,13 +6,14 @@
 <section class="recorded-page">
     <div class="recorded-header">
        <h1 class="page-title">offline Courses</h1>
-       <p>Learn anytime, anywhere with our recorded Courses</p>
+       <p>study in one of our branches with direct interaction and continuous practice</p>
     </div>
 </section>
 <section  class="recorded-courses" >
     <div class="recorded-container">
         <div class="recorded-grid">
           {%for course in course%}
+          <div  data-aos="zoom-in" data-aos-delay="300">
             <div class="recorded-card">
                 <div class="recorded-img">
                     {%if course.image%}
@@ -22,12 +23,13 @@
                 <div class="recorded-content">
                     <h3>{{course.title}}</h3>
                     <p> {{course.description}}</p>
-                    <a href="/booking"> Book course</a>
+                    <a href="/booking" class="btn btn-admin"> Book course</a>
                 </div>
                 <div class="recorded-actions">
 
                 </div>
             </div>
+          </div>  
           {%endfor%} 
         </div>
     </div>

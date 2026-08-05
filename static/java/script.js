@@ -1,4 +1,4 @@
-
+//scroll
 const navbar = document.querySelector(".navbar");
 if (document.body.scrollHeight <= window.innerHeight){
     navbar.classList.add("scrolled");
@@ -12,7 +12,7 @@ window.addEventListener("scroll", function () {
     }
 
 });
-
+//coumter
 const counters = document.querySelectorAll(".counter");
 const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry =>{
@@ -20,16 +20,17 @@ const counterObserver = new IntersectionObserver((entries) => {
 
             const counter = entry.target;
             const target = +counter.dataset.target;
+            const symbol = counter.dataset.symbol || "";
             let current = 0;
             const increment = target /100;
             const updatecounter = () =>{
                 if (current < target) {
                     current += increment;
-                    counter.innerText = Math.ceil(current);
+                    counter.innerText = Math.ceil(current) + symbol;
                     requestAnimationFrame(updatecounter);
 
                 } else {
-                    counter.innerText = target + "+"
+                    counter.innerText = target + symbol;
                 }
             };
             updatecounter();
@@ -65,19 +66,47 @@ AOS.init({
     offset: 100
 })
 
+//swiper
+document.addEventListener("DOMContentLoaded", function () {
+
+    new Swiper(".successSwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 3500
+        },
+        pagination:{
+            el: ".swiper-pagination",
+            clickbale: true,
+        },
+        breakpoints: {
+            0: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1200: { slidesPerView: 3 }
+        }
+    });
+
+});
+
+console.log("Swiper Loaded")
 
 
+//view image
 
+function openImage(src){
+    document.getElementById("imageModal").style.display = "block";
+    document.getElementById("modalImg").src = src;
+}
 
-
-
-
-
+function closeImage(){
+    document.getElementById("imageModal").style.display = "none";
+}
 
 
 // ===============================
 // Booking options
-// ===============================
+
 
 const exam = document.getElementById("exam");
 

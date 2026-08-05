@@ -401,89 +401,159 @@ hr{
 
 
 /*success stories*/
-
-.success{
-    background: var(--white);
+.success-section{
+    padding:100px 0;
+    background:#f8f8f8;
 }
 
-.slider{
+.successSwiper{
+    padding:20px 10px 70px;
+}
+
+.swiper-slide{
+    display:flex;
+    justify-content:center;
+    height:auto;
+}
+
+.success-card{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    height: auto;
+    width:100%;
+    max-width:370px;
+    background:linear-gradient(135deg,#fff, #fff0f0);
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.35s;
 }
 
-.stu-card{
-    width: 380px;
-    background: var(--primary-color);
-    border-radius: var(--radius);
-    padding: 40px 30px;
-    text-align: center;
-    transition: var(--trnasition);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, .08);
-    cursor: pointer;
-}
-.stu-card:hover{
-    transform: translateY(-10px);
+.success-card:hover{
+    transform:translateY(-10px);
 }
 
-.stu-img{
-    width: 130px;
-    height: 130px;
-    margin: 0 auto 20px;
-    }
-
-.stu-img img{
-    width: 100%;
-    height: 100%;
-    border-radius: 35%;
-    object-fit: cover;
-    border: 5px solid var(--secondary-color);
-
+.success-card img{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #c8a165;
+    margin:auto;
+    display:block;
 }
 
-.stu-card h3{
-    font-size: 26px;
-    color: var(--background-color);
-    margin-bottom: 10px;
-}
-.subjict{
-    display: block;
-    color: var(--secondary-color);
-    margin-bottom: 25px;
-    font-weight: 500;
+.success-card h3{
+    margin-top:18px;
+    margin-bottom:5px;
 }
 
-.scores{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 30px;
+.subject{
+    color:#888;
+    font-size:14px;
 }
-    
-.old-score{
-    color: var(--danger);
-    font-size: 32px;
-    font-weight: 700;
+
+.score-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:30px 0;
+}
+
+.score-box div{
+    flex:1;
+}
+
+.score-box small{
+    display:block;
+    color:#999;
+    margin-bottom:8px;
+}
+
+.score-box h4{
+    font-size:40px;
+    color:#222;
+    margin:0;
 }
 
 .arrow{
-    font-size: 28px;
-    color: var(--secondary-color);
-
-}
-.new-score{
-    color: var(--success);
-    font-size: 32px;
-    font-weight: 700;
+    font-size:35px;
+    color:#c8a165;
+    margin:0 20px;
 }
 
-.student-mesg{
-    color: var(--background-color);
-    line-height: 1.8;
-    font-size: 16px;
-    font-style: italic;
+.improvement{
+    margin:20px 0;
+    font-size:18px;
+    font-weight:700;
+    color:#28a745;
 }
+
+.review{
+    font-family: "poppins", sans-serif;
+    word-break: break-word;
+    margin-top:20px;
+    color:#666;
+    line-height:1.8;
+}
+
+.swiper-button-next,
+.swiper-button-prev{
+    color:#c8a165;
+}
+
+.swiper-pagination-bullet{
+    background:#c8a165;
+    opacity:.4;
+}
+
+.swiper-pagination-bullet-active{
+    opacity:1;
+}
+
+.successSwiper .swiper-pagination{
+    position: relative;
+    margin-top: 35px;
+}
+
+.successSwiper .swiper-pagination-bullet{
+    width: 12px;
+    height: 12px;
+    background: #d4af37;
+    opacity: .35;
+    transition: .3s;
+}
+
+.successSwiper .swiper-pagination-bullet-active{
+    opacity: 1;
+    width: 28px;
+    border-radius: 30px;
+}
+
+@media (max-width:768px){
+
+    .success-card{
+        max-width:100%;
+        padding:20px;
+    }
+
+    .score-box h4{
+        font-size:30px;
+    }
+
+    .arrow{
+        font-size:24px;
+        margin:0 10px;
+    }
+
+    .success-card img{
+        width:90px;
+        height:90px;
+    }
+
+}
+
 /*============================================================================================*/
 
 
@@ -739,6 +809,7 @@ hr{
 }
 
 .card{
+    height: 100%;
     background: #061123;
     width: 350px;
     padding: 40px 30px;
@@ -788,12 +859,13 @@ hr{
 }
 .about-hero .container{
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: space-between;
     gap: 60px;
     flex-wrap: wrap;
 }
 .about-hero-content{
+    padding-left: 40px;
     flex: 1;
     min-width: 320px ;
 
@@ -923,7 +995,7 @@ hr{
 }
 .gallery-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+    grid-template-columns: repeat(4,1fr);
     gap: 25px;
     margin-top: 50px;
 }
@@ -993,7 +1065,7 @@ hr{
     transition: var(--trnasition);
 }
 .faq-container summary i{
-    color: #fca311;
+    color: var(--secondary-color);
     font-size: 18px;
     transition: var(--trnasition);
 }
@@ -1808,6 +1880,7 @@ hr{
 }
 
 .toast{
+    opacity: 1;
 
     min-width: 320px;
 
@@ -1831,6 +1904,9 @@ hr{
 
     animation:toastIn 0.3s ease;
 
+}
+.toast.hide{
+    opacity: 0;
 }
 
 .toast.success{

@@ -6,14 +6,15 @@
 <section class="recorded-page">
     <div class="recorded-header">
        <h1 class="page-title">Recorded Courses</h1>
-       <p>Learn anytime, anywhere with our recorded Courses</p>
+       <p>learn at your own pace with lifetime access to recorded sessions</p>
     </div>
 </section>
 <section  class="recorded-courses">
     <div class="recorded-container">
         <div class="recorded-grid">
           {%for recorded in recorded%}
-            <div class="recorded-card">
+           <div  data-aos="zoom-in" data-aos-delay="300">
+             <div class="recorded-card">
                 <div class="recorded-img" c>
                     {%if recorded.thumbnail%}
                       <img src="{{ url_for('static', filename='uploads/'+ recorded.thumbnail) }}" alt="{{recorded.title}}">
@@ -21,8 +22,13 @@
                 </div>
                 <div class="recorded-content">
                     <h3>{{recorded.title}}</h3>
-                    <p> {{recorded.description}}</p>
-                   <span>{{recorded.price}} EGP</span>
+                    <p class="p1"> {{recorded.description}}</p>
+                    <p class="course-lessons"><i class="fa-solid fa-video"></i> {{recorded.lesson|length}} Lessons</p>
+                    <hr>
+                   <span class="price-tag">
+                    <i class="fa-solid fa-tag"></i>
+                     {{"{:,.0f}".format( recorded.price) }} EGP
+                  </span>
                    {% set purchase = purchases.get(recorded.id)%}
                 </div>
                 <div class="recorded-actions">
@@ -44,7 +50,8 @@
                     {%endif%}
 
                 </div>
-            </div>
+             </div>
+           </div>
           {%endfor%} 
         </div>
     </div>
