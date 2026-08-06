@@ -1318,3 +1318,263 @@ textarea.form-control{
     color: white;
     cursor: pointer;
 }
+
+@media (max-width: 992px){
+
+    .admin-container{
+        padding: 20px;
+    }
+
+    .dashboard-grid{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+    }
+
+    .dashboard-card{
+        padding: 25px;
+    }
+
+}
+
+
+/* ============================= */
+/* Mobile */
+/* ============================= */
+@media (max-width:768px){
+
+    .admin-container{
+        padding: 15px;
+    }
+
+    .dashboard-title{
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .dashboard-grid{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .dashboard-card{
+        width: 100%;
+        padding: 20px;
+    }
+
+    .dashboard-card i{
+        font-size: 35px;
+    }
+
+    .dashboard-card h3{
+        font-size: 18px;
+    }
+
+    .btn{
+        width: 100%;
+    }
+
+}
+
+
+/* ============================= */
+/* Small Mobile */
+/* ============================= */
+@media (max-width:576px){
+
+    .dashboard-title{
+        font-size: 25px;
+    }
+
+    .dashboard-card{
+        padding: 18px;
+    }
+
+    .dashboard-card i{
+        font-size: 30px;
+    }
+
+    .dashboard-card h3{
+        font-size: 16px;
+    }
+
+}
+@media (max-width: 992px){
+
+    .admin-container{
+        padding:20px;
+    }
+
+    .card-admin{
+        padding:20px;
+    }
+
+    .course-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:20px;
+    }
+
+    .card-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .admin-form{
+        width:100%;
+    }
+
+    .admin-table{
+        min-width:900px;
+    }
+
+    .table-container,
+    .table-container{
+        overflow-x:auto;
+    }
+
+}
+
+/* ========================= */
+/* Mobile */
+/* ========================= */
+@media (max-width:768px){
+
+    .admin-container{
+        margin-top: 40px;
+        padding:15px;
+    }
+
+    .dashboard-title,
+    .card-title{
+        font-size:28px;
+        text-align:center;
+    }
+
+    .course-grid{
+        grid-template-columns:1fr;
+    }
+
+    .course-card{
+        width:100%;
+    }
+
+    .card-header{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .btn-admin,
+    .btn,
+    .submit-btn button{
+        width:100%;
+    }
+
+    .admin-form{
+        width:100%;
+    }
+
+    .input-box input,
+    .input-box textarea,
+    .input-box select{
+        width:100%;
+        font-size:16px;
+    }
+
+    .admin-table{
+        min-width:900px;
+    }
+
+    .table-container,
+    .table-container{
+        overflow-x:auto;
+    }
+
+    .table-action{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+
+}
+
+/* ========================= */
+/* Small Mobile */
+/* ========================= */
+@media (max-width:576px){
+
+    .dashboard-title,
+    .card-title{
+        font-size:24px;
+    }
+
+    .course-card{
+        padding:15px;
+    }
+
+    .course-card h3{
+        font-size:18px;
+    }
+
+    .course-card p{
+        font-size:14px;
+    }
+
+    .btn,
+    .btn-admin,
+    .submit-btn button{
+        font-size:14px;
+        padding:10px;
+    }
+
+}
+@media (max-width: 768px) {
+
+    .admin-container{
+        padding:15px;
+    }
+
+    .card-admin{
+        padding:15px;
+        overflow-x:auto;
+    }
+
+    .card-header{
+        display:flex;
+        flex-direction:column;
+        gap:15px;
+        align-items:flex-start;
+    }
+
+    .card-title{
+        font-size:24px;
+    }
+
+    .btn-admin{
+        width:100%;
+        justify-content:center;
+    }
+
+    .admin-table{
+        min-width:700px;
+    }
+
+    .table-action{
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .table-action a,
+    .table-action button{
+        width:100%;
+        text-align:center;
+    }
+
+    .modal img{
+        width:95%;
+        height:auto;
+    }
+
+}

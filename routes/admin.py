@@ -70,9 +70,8 @@ def edit_course( course_id ):
 #=================delete courses=========//////
 @admin.route("/admin/delete-course/<int:course_id>", methods=["GET", "POST"])
 @login_required
+@admin_required
 def delete_course( course_id ):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     course = Course.query.get_or_404(course_id)
     if course.schedule:
         flash("you can't delete this course because it has groups","danger")
@@ -86,9 +85,8 @@ def delete_course( course_id ):
 #=========add group=========///
 @admin.route("/admin/add-group", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_group():
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     courses = Course.query.all()
     branches = Branch.query.all()
     if request.method == "POST":
@@ -123,27 +121,46 @@ def add_group():
 
 
 #====branch==////
+@admin.route("/admin/branch", methods=["POST", "GET"])
+@login_required
+@admin_required
+def branch():
+    branch = Branch.query.all()
+    return render_template("admin/branch.html" ,branch=branch, name= "Branches")
 
 @admin.route("/admin/add-branch", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_branch():
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     if request.method == "POST":
 
-        name = request.form["name"]
+        name = request.form.get("name")
         branch = Branch(
             name=name
         )
             
         db.session.add(branch)
         db.session.commit()
-        return redirect(url_for("admin.admin_dashboard"))
+        return redirect(url_for("admin.branch"))
     return render_template("admin/add-branch.html")  
+
+@admin.route("/admin/delete-branch/<int:branch_id>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def delete_branch( branch_id ):
+    branch = Branch.query.get_or_404(branch_id)
+    if branch.schedule:
+        flash("you can't delete this course because it has groups","danger")
+        return redirect(url_for("admin.branch"))
+        
+    db.session.delete(branch)
+    db.session.commit()
+    return redirect(url_for("admin.branch"))
 
 
 #========successs story====///
 @admin.route("/success-stories")
+@login_required
 @admin_required
 def success_stories():
 
@@ -159,6 +176,7 @@ def success_stories():
 #===============
 
 @admin.route("/success-stories/add", methods=["GET", "POST"])
+@login_required
 @admin_required
 def add_success_story():
 
@@ -220,6 +238,7 @@ def add_success_story():
 #============
 
 @admin.route("/success-stories/edit/<int:story_id>", methods=["GET", "POST"])
+@login_required
 @admin_required
 def edit_success_story(story_id):
 
@@ -264,6 +283,7 @@ def edit_success_story(story_id):
 #====================
 
 @admin.route("/success-stories/delete/<int:story_id>", methods=["POST"])
+@login_required
 @admin_required
 def delete_success_story(story_id):
 

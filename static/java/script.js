@@ -243,30 +243,54 @@ branch.addEventListener("change", loadSchedules);
 
 
 
-document.querySelectorAll(".toast").forEach(function(toast){
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
 
-    setTimeout(function(){
+    const input = document.createElement("textarea");
+    input.value = text;
 
-        toast.style.opacity="0";
+    document.body.appendChild(input);
 
-        toast.style.transform="translateX(120%)";
+    input.select();
+    document.execCommand("copy");
+
+    document.body.removeChild(input);
+
+    alert("Copied Successfully");
+}
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".toast").forEach(function(toast){
+
+        const close = toast.querySelector(".close-toast");
+
+        close.addEventListener("click", function(){
+
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(120%)";
+
+            setTimeout(function(){
+                toast.remove();
+            },300);
+
+        });
 
         setTimeout(function(){
 
-            toast.remove();
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(120%)";
 
-        },300);
+            setTimeout(function(){
+                toast.remove();
+            },300);
 
-    },3000);
+        },3000);
 
-});
-
-document.querySelectorAll(".close-toast").forEach(function(btn){
-
-    btn.onclick=function(){
-
-        this.parentElement.remove();
-
-    }
+    });
 
 });

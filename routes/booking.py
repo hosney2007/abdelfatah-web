@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request, redirect, url_for,render_template,flash
 from models.schedaule import Schedule
 from models.branch import Branch
+from flask_login import login_required
+from utils.decorators import admin_required
 from models.course import Course
 from models.booking import Booking
 from extinsion import db
@@ -36,12 +38,16 @@ def get_schedules():
 
 #========ADMIN BOOKINGS======///
 @booking.route("/admin/booking", methods=["POST", "GET"])
+@login_required
+@admin_required
 def admin_booking():
     bookings = Booking.query.all()
     return render_template("admin/bookings.html" ,booking=bookings, name="Bookings")
 
 #=======APPROVE BOOKING===///
 @booking.route("/admin/booking/<int:booking_id>/approve")
+@admin_required
+@login_required
 def approve_booking(booking_id):
     booking = Booking.query.get_or_404(booking_id)
     booking.status = "approved"
@@ -50,6 +56,8 @@ def approve_booking(booking_id):
 
 #======[DELETE]====//
 @booking.route("/admin/booking/<int:booking_id>/delete")
+@login_required
+@admin_required
 def delete_booking(booking_id):
     booking = Booking.query.get_or_404(booking_id)
             

@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template,redirect,url_for,flash
+from flask_login import login_required
+from utils.decorators import admin_required
 
 from models.schedaule import Schedule
 from extinsion import db
@@ -6,6 +8,8 @@ from extinsion import db
 schedule = Blueprint("schedule", __name__)
 #======= SHOW GROUPS===///
 @schedule.route("/admin/schedule")
+@admin_required
+@login_required
 def show_schedules():
     schedules = Schedule.query.all()
     print(schedules)
@@ -13,6 +17,8 @@ def show_schedules():
 
 #=====DELTE GROUPS=======//
 @schedule.route("/admin/schedule/<int:schedule_id>/delete")
+@login_required
+@admin_required
 def delete_schedule(schedule_id):
     schedule = Schedule.query.get_or_404(schedule_id)
     if schedule.bookings:

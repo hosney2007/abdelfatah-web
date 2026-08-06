@@ -152,7 +152,9 @@ def register():
             email=email,
             password=hashed_password
         )
-
+        if len(password) < 8:
+            flash("Password must be at least 8 characters.", "danger")
+            return redirect(url_for("auth.register"))
         db.session.add(user)
         db.session.commit()
         send_verification_email(user)
@@ -295,7 +297,7 @@ def reset_password(token):
     if request.method == "POST":
 
         password = request.form["password"]
-        confirm = request.form["confirm"]
+        confirm = request.form["confirm_password"]
 
         if password != confirm:
             flash("Passwords do not match.", "danger")

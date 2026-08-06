@@ -6,6 +6,7 @@ from models.lesson import Lessons
 from models.purchase import Purchase
 from werkzeug.utils import secure_filename
 import os
+from utils.decorators import admin_required
 
 
 recorded = Blueprint("recorded",__name__)
@@ -25,18 +26,17 @@ def recorded_page():
 #=======RECORDED COURSES=====//
 @recorded.route("/admin/recorded", methods=["POST", "GET"])
 @login_required
-def recorded_courses():
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403    
+@admin_required
+def recorded_courses(): 
     recorded = Recorded.query.all()
     return render_template("admin/recorded.html" ,recorded=recorded , name= "recorded")
 
 #========ADD COURSE====///
 @recorded.route("/admin/recorded/add", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_course():
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
+
     if request.method == "POST":
         thumbnail = request.files["thumbnail"]
         filename = secure_filename(thumbnail.filename)
@@ -63,9 +63,9 @@ def add_course():
 #=======EDIT=====//
 @recorded.route("/admin/recorded/edit/<int:id>", methods=["GET", "POST"])
 @login_required
+@admin_required
 def edit_course( id ):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
+
     recorded = Recorded.query.get_or_404(id)
     if request.method == "POST":
 
@@ -80,9 +80,9 @@ def edit_course( id ):
 #====DELETE=====////
 @recorded.route("/admin/recorded/delete/<int:id>", methods=["GET", "POST"])
 @login_required
+@admin_required
 def delete_course( id ):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
+
     recorded = Recorded.query.get_or_404(id)
     if recorded.purchase:
         flash("you can't delete this course because it has orders","danger")
@@ -94,9 +94,9 @@ def delete_course( id ):
 
 #==========LESSON VIEW====///
 @recorded.route("/admin/recorded/<int:id>/lesson", methods=["POST", "GET"])
-def lessons(id):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403    
+@login_required
+@admin_required
+def lessons(id):  
     recorded = Recorded.query.get_or_404(id)
     lessons = Lessons.query.filter_by(
         recorded_course_id=id
@@ -106,9 +106,8 @@ def lessons(id):
 
 @recorded.route("/admin/recorded/<int:id>/lesson/add", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_lesson(id):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     recorded = Recorded.query.get_or_404(id)
     if request.method == "POST":
         lesson=Lessons(
@@ -126,9 +125,9 @@ def add_lesson(id):
 #=======EDIT LESSON=======///
 @recorded.route("/admin/lesson/edit/<int:id>", methods=["GET", "POST"])
 @login_required
+@admin_required
 def edit_lesson( id ):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
+
     lesson = Lessons.query.get_or_404(id)
     if request.method == "POST":
         lesson.title = request.form["title"]
@@ -144,9 +143,9 @@ def edit_lesson( id ):
 #==============DELETE LESSON======///
 @recorded.route("/admin/lesson/delete/<int:id>", methods=["GET", "POST"])
 @login_required
+@admin_required
 def delete_lesson( id ):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
+
     lesson = Lessons.query.get_or_404(id)
 
     db.session.delete(lesson)
@@ -159,14 +158,15 @@ def delete_lesson( id ):
 #=================ORDERS======================////
 @recorded.route("/admin/orders", methods=["GET", "POST"])
 @login_required
+@admin_required
 def orders():
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
     orders = Purchase.query.order_by(Purchase.id.desc()).all()
     return render_template("admin/orders.html", orders=orders)
 
 #====== APPROVE ORDERS======///
 @recorded.route("/admin/orders/<int:id>/approve")
+@login_required
+@admin_required
 def approve_order(id):
     order = Purchase.query.get_or_404(id)
     order.status = "approved"
@@ -175,6 +175,8 @@ def approve_order(id):
 
 #==========REJECT ORDERS====///
 @recorded.route("/admin/orders/<int:id>/reject")
+@login_required
+@admin_required
 def reject_order(id):
     order = Purchase.query.get_or_404(id)
     order.status = "rejected"
@@ -185,9 +187,9 @@ def reject_order(id):
 #==============DELETE order======///
 @recorded.route("/admin/orders/<int:id>/delete", methods=["GET", "POST"])
 @login_required
+@admin_required
 def delete_order( id ):
-    if current_user.role != "admin":
-        return "ACCESS DENIED", 403
+
     order = Purchase.query.get_or_404(id)
 
     db.session.delete(order)

@@ -72,18 +72,23 @@
       </div>
         <div class="contact-form"  data-aos="zoom-in" data-aos-delay="400">
             <h3>Send A Message</h3>
-            <form>
+            <form method="post">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                 <input type="text"
+                name="name"
                 placeholder="Full Name">
                 <input type="tel"
+                name="number"
                 placeholder="Phone Number">
-                <select>
-                    <option>Select Course</option>
-                    <option>SAT</option>
-                    <option>EST</option>
-                    <option>ACT</option>
+                <select name="course">
+                    <option value="">Select Course</option>
+                    <option value="sat">SAT</option>
+                    <option value="est">EST</option>
+                    <option value="act">ACT</option>
                 </select>
                 <Textarea rows="6"
+                name="message"
                 placeholder="Message"></Textarea>
                 <button type="submit"
                 class="btn">Send Message</button>

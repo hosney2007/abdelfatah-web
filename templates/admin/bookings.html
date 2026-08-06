@@ -9,19 +9,20 @@
             <h2 class="card-title">Bookings</h2>
         </div>
         <div class="card-body">
-            <div class="table=container">
+            <div class="table-container">
                 <table class="admin-table">
                     <thead>
                         <tr>
                          <th>Name</th>
-                         <th>student number</th>
-                         <th>student number</th>
-                         <th>grade</th>
-                         <th>course</th>
-                         <th> mode</th>
-                         <th>branch</th>
-                         <th>status</th>
-                         <th>action</th>
+                         <th>Student Number</th>
+                         <th>Student Number</th>
+                         <th>Grade</th>
+                         <th>Course</th>
+                         <th> Mode</th>
+                         <th>Branch</th>
+                         <th>Addational Notes</th>
+                         <th>Status</th>
+                         <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                           <td>{{booking.course.title }}</td>
                           <td>{{booking.mode }}</td>
                           <td>{{booking.branch.name }}</td>
+                          <td>{{booking.addational_notes}}</td>
                           <td>
                              {%if booking.status == "pending"%}
                                 <span class="badge badge-warning">Pending</span>

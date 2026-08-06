@@ -38,9 +38,9 @@
             <a href="/dashboard" class="btn-nav">My Account</a>
         
         {%else%}
-        <li>
+        
             <a href="{{url_for('auth.login')}}" class="btn-nav">Login/Register</a>
-        </li>
+    
         {%endif%}
 
 
@@ -48,6 +48,14 @@
     </nav>
     {% block body %}
     {% endblock %}
+
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"> </script>
+    <script src="{{url_for('static', filename='java/script.js')}}"></script>
+    <script> const csrf_token = "{{ csrf_token() }}" </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
 
 
 <div class="toast-container">
@@ -60,9 +68,9 @@
 
                 <div class="toast {{ category }}">
 
-                    {{ message }}
+                    <span>{{ message }}</span>
 
-                    <span class="close-toast">&times;</span>
+                    <button class="close-toast">&times;</button>
 
                 </div>
 
@@ -74,10 +82,53 @@
 
 </div>
 
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"> </script>
-    <script src="{{url_for('static', filename='java/script.js')}}"></script>
-    <script> const csrf_token = "{{ csrf_token() }}" </script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+
+    
+    <div class="mobile-nav">
+
+    <a href="/" class="mobile-item {% if request.path == '/' %}active{% endif %}">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+    <a href="/about" class="mobile-item {% if request.path == '/about' %}active{% endif %}">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>About</span>
+    </a>        
+    <a href="/courses" class="mobile-item {% if request.path.startswith ('/courses') %}active{% endif %}">
+        <i class="fa-solid fa-book-open"></i>
+        <span>Courses</span>
+    </a>
+
+    <a href="/booking" class="mobile-item {% if request.path == '/booking' %}active{% endif %}">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Booking</span>
+    </a>
+
+    <a href="/contact" class="mobile-item {% if request.path == '/contact' %}active{% endif %}">
+        <i class="fa-solid fa-phone"></i>
+        <span>Contact</span>
+    </a>
+
+    {% if current_user.is_authenticated %}
+
+   <a href="/dashboard" class="mobile-item {% if request.path == '/dashboard' %}active{% endif %}">
+    <i class="fa-solid fa-user"></i>
+    <span>Account</span>
+   </a>
+    </a>
+
+    {% else %}
+
+    <a href="{{ url_for('auth.login') }}" class="mobile-item {% if request.path == '' %}active{% endif %}">
+        <i class="fa-solid fa-user"></i>
+        <span>Login</span>
+    </a>
+
+    {% endif %}
+
+</div>
 
 
 </body>

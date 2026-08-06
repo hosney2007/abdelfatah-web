@@ -7,6 +7,7 @@ class Booking(db.Model):
     student_number = db.Column(db.String(20), nullable=False)
     parent_number = db.Column(db.String(20), nullable=False)
     grade = db.Column(db.String(10), nullable=False)
+    addational_notes = db.Column(db.String(150), nullable=False)
 
     course_id = db.Column(db.Integer, db.ForeignKey("course.id"), nullable=False )
     schedule_id = db.Column(db.Integer, db.ForeignKey("schedule.id"), nullable=False )

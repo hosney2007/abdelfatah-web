@@ -6,8 +6,10 @@ from routes.courses import course
 from routes.scheddules import schedule
 from routes.recorded import recorded
 from routes.booking import booking
+from routes.contact import message
 from models.schedaule import Schedule
 from models.booking import Booking
+from models.message import Message
 from models.success_story import SuccessStory
 from models.branch import Branch
 from routes.admin import admin
@@ -22,6 +24,7 @@ app.register_blueprint(course)
 app.register_blueprint(booking)
 app.register_blueprint(schedule)
 app.register_blueprint(recorded)
+app.register_blueprint(message)
 import os
 
 
@@ -111,6 +114,7 @@ def booking():
           parent_number = request.form["parent_number"],
           grade = request.form["grade"],
           mode = request.form["mode"],
+          addational_notes= request.form["addational_notes"],
           course_id = request.form["exam"],
           branch_id = request.form.get("branch_id"),
           schedule_id = request.form["schedule_id"],
@@ -124,8 +128,19 @@ def booking():
     return render_template('booking.html', name = 'booking', course=courses, branches=branches )   
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["POST", "GET"])
 def contact():
+    if request.method == "POST":
+         message=Message(
+          name = request.form["name"],
+          number = request.form["number"],
+          message= request.form["message"],
+          course = request.form["course"],
+         )
+         db.session.add(message)
+         db.session.commit()
+         flash("your message has been confirmed")
+         return redirect(url_for("contact"))  
     return render_template('contact.html', name = 'contact')    
 
 
