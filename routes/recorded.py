@@ -6,7 +6,7 @@ from models.lesson import Lessons
 from models.purchase import Purchase
 from werkzeug.utils import secure_filename
 import os
-from utils.decorators import admin_required
+from utils.decorators import admin_required,save_image
 
 
 recorded = Blueprint("recorded",__name__)

@@ -1,3 +1,40 @@
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".toast").forEach(function(toast){
+
+        const close = toast.querySelector(".close-toast");
+
+        close.addEventListener("click", function(){
+
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(120%)";
+
+            setTimeout(function(){
+                toast.remove();
+            },300);
+
+        });
+
+        setTimeout(function(){
+
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(120%)";
+
+            setTimeout(function(){
+                toast.remove();
+            },300);
+
+        },3000);
+
+    });
+
+});
+
+
+
+
+
+
 //scroll
 const navbar = document.querySelector(".navbar");
 if (document.body.scrollHeight <= window.innerHeight){
@@ -263,34 +300,3 @@ function copyText(id) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    document.querySelectorAll(".toast").forEach(function(toast){
-
-        const close = toast.querySelector(".close-toast");
-
-        close.addEventListener("click", function(){
-
-            toast.style.opacity = "0";
-            toast.style.transform = "translateX(120%)";
-
-            setTimeout(function(){
-                toast.remove();
-            },300);
-
-        });
-
-        setTimeout(function(){
-
-            toast.style.opacity = "0";
-            toast.style.transform = "translateX(120%)";
-
-            setTimeout(function(){
-                toast.remove();
-            },300);
-
-        },3000);
-
-    });
-
-});

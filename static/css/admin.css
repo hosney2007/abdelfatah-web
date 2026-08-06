@@ -1371,9 +1371,7 @@ textarea.form-control{
         font-size: 18px;
     }
 
-    .btn{
-        width: 100%;
-    }
+
 
 }
 
@@ -1466,7 +1464,6 @@ textarea.form-control{
     }
 
     .btn-admin,
-    .btn,
     .submit-btn button{
         width:100%;
     }
@@ -1521,7 +1518,6 @@ textarea.form-control{
         font-size:14px;
     }
 
-    .btn,
     .btn-admin,
     .submit-btn button{
         font-size:14px;
