@@ -20,7 +20,7 @@ from werkzeug.security import generate_password_hash
 from models.course import Course
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
 #bluebrint regisrtion====================================///
