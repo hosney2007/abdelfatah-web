@@ -1,3 +1,4 @@
+#imports======================///
 from flask import Blueprint, render_template,redirect,request,url_for,flash,current_app
 from models.recorded import Recorded
 from flask_login import login_required,current_user
@@ -7,7 +8,6 @@ from models.purchase import Purchase
 from werkzeug.utils import secure_filename
 import os
 from utils.decorators import admin_required,save_image
-
 
 recorded = Blueprint("recorded",__name__)
 
@@ -139,7 +139,6 @@ def edit_lesson( id ):
         return redirect(url_for("recorded.lessons", id=lesson.recorded_course_id))
     return render_template("admin/edit-lesson.html", lesson=lesson, name="Edit lesson") 
 
-
 #==============DELETE LESSON======///
 @recorded.route("/admin/lesson/delete/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -183,7 +182,6 @@ def reject_order(id):
     db.session.commit()
     return redirect(url_for("recorded.orders"))
 
-
 #==============DELETE order======///
 @recorded.route("/admin/orders/<int:id>/delete", methods=["GET", "POST"])
 @login_required
@@ -195,10 +193,6 @@ def delete_order( id ):
     db.session.delete(order)
     db.session.commit()
     return redirect(url_for("recorded.orders"))
-
-
-
-
 
 #==========PAYMENTS PAGE=====///
 @recorded.route("/courses/recorded/<int:id>/payment", methods=["GET", "POST"])

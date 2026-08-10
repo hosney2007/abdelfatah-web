@@ -1,6 +1,5 @@
 from extinsion import db
 from models.lesson import Lessons
-
 class Recorded(db.Model):
     __tablename__ = "recorded"
 

@@ -50,7 +50,7 @@ body{
     margin: 40px auto;
 
 }
-
+/*cards*/
 .card-admin{
     width: 100%;
     background: var(--primary-color);
@@ -78,7 +78,7 @@ body{
     width: 100%;
 }
 
-
+/*buttons*/
 .btn-admin{
     display: inline-flex;
     align-items: center;
@@ -283,7 +283,7 @@ textarea.form-control{
     background: #fee2e2;
     color: #991b1b;
 }
-/*=======================================================*/
+/*======course page=================================================*/
 
 .course-grid{
     display: grid;
@@ -357,7 +357,7 @@ textarea.form-control{
     color: var(--white);
 }
 
-/*======================================*/
+/*===========admin dashboard===========================*/
 .dashboard-title{
     background: #061123;
     text-align: center;
@@ -393,7 +393,7 @@ textarea.form-control{
 .dashboard-card h3{
     font-size: 22px;
 }
-/*=========================================================================================================================================*/
+/*========recordedpage=================================================================================================================================*/
 .recorded-page{
     background: linear-gradient(135deg, #091125, #061123);
     padding: 100PX 8%;
@@ -479,19 +479,13 @@ textarea.form-control{
 }
 
 
-/* ===========================
-   Lesson Page
-=========================== */
+/* ===========================Lesson Page========================== */
 
 .lesson-page{
     padding-top: 80px;
     padding: 120px 0;
 }
-
-
-/* ===========================
-   Header
-=========================== */
+/* ===========================Header===================*/
 
 .course-header{
     margin-bottom: 40px;
@@ -509,10 +503,7 @@ textarea.form-control{
     font-size: 17px;
 }
 
-
-/* ===========================
-   Layout
-=========================== */
+/* ===========================Layout=========================== */
 
 .lesson-layout{
 
@@ -523,11 +514,7 @@ textarea.form-control{
     gap: 30px;
 
 }
-
-
-/* ===========================
-   Video Player
-=========================== */
+/* ===========================Video Player=========================== */
 
 .video-player{
 
@@ -552,11 +539,7 @@ textarea.form-control{
     height: 100%;
 
 }
-
-
-/* ===========================
-   Lesson Info
-=========================== */
+/* ===========================Lesson Info=========================== */
 
 .lesson-info{
 
@@ -598,10 +581,7 @@ textarea.form-control{
 
 }
 
-
-/* ===========================
-   Sidebar
-=========================== */
+/* ===========================Sidebar=========================== */
 
 .lesson-sidebar{
 
@@ -643,10 +623,7 @@ textarea.form-control{
 
 }
 
-
-/* ===========================
-   Lesson List
-=========================== */
+/* ===========================Lesson List========================== */
 
 .lesson-list{
 
@@ -657,11 +634,7 @@ textarea.form-control{
     gap: 15px;
 
 }
-
-
-/* ===========================
-   Lesson Card
-=========================== */
+/* ===========================Lesson Card=========================== */
 
 .lesson-card{
 
@@ -754,9 +727,7 @@ textarea.form-control{
 }
 
 
-/* ===========================
-   Responsive
-=========================== */
+/* =========================Responsive=========================== */
 
 @media(max-width:991px){
 
@@ -769,10 +740,7 @@ textarea.form-control{
 }
 
 
-
-/* ===========================
-   Payment Page
-=========================== */
+/* ===========================Payment Page=========================== */
 
 .payment-page{
     padding: 60px 0;
@@ -780,9 +748,7 @@ textarea.form-control{
     min-height: 100vh;
 }
 
-/* ===========================
-   Card
-=========================== */
+/* ===========================Card=========================== */
 
 .payment-card{
     background: #fff;
@@ -791,9 +757,7 @@ textarea.form-control{
     box-shadow: 0 10px 25px rgba(0,0,0,.08);
 }
 
-/* ===========================
-   Course Info
-=========================== */
+/* ===========================Course Info=========================== */
 
 .course-info{
     display: flex;
@@ -825,9 +789,7 @@ textarea.form-control{
     font-weight: bold;
 }
 
-/* ===========================
-   Titles
-=========================== */
+/* ===========================Titles=========================== */
 
 .section-title{
     margin: 30px 0 20px;
@@ -835,9 +797,7 @@ textarea.form-control{
     font-size: 24px;
 }
 
-/* ===========================
-   Payment Methods
-=========================== */
+/* ===========================Payment Methods=========================== */
 
 .payment-method{
     display: flex;
@@ -881,9 +841,7 @@ textarea.form-control{
     font-size: 15px;
 }
 
-/* ===========================
-   Copy Button
-=========================== */
+/* ===========================Copy Button=========================== */
 
 .payment-method button{
     background: #D4AF37;
@@ -901,9 +859,7 @@ textarea.form-control{
     color: #D4AF37;
 }
 
-/* ===========================
-   Instructions
-=========================== */
+/* ===========================Instructions=========================== */
 
 .instructions{
     padding-left: 20px;
@@ -952,9 +908,7 @@ textarea.form-control{
     border-color: #D4AF37;
 }
 
-/* ===========================
-   Upload Button
-=========================== */
+/* ===========================Upload Button=========================== */
 
 .upload-btn{
     width: 100%;
@@ -986,9 +940,7 @@ textarea.form-control{
     background: #eee;
 }
 
-/* ===========================
-   Responsive
-=========================== */
+/* ===========================Responsive========================== */
 
 @media(max-width:768px){
     .recorded-grid{
@@ -1022,7 +974,7 @@ textarea.form-control{
 
 }
 
-
+/*============================student dashboard=====================*/
 
 .dashboard-container{
     width:90%;
@@ -1260,6 +1212,7 @@ textarea.form-control{
     color:#777;
 }
 
+/*====================================responsive===================*/
 @media(max-width:1100px){
 
 .statistic{

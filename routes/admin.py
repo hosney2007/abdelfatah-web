@@ -1,3 +1,4 @@
+#imoprts=============================///
 from flask import Blueprint, render_template, request, redirect, url_for,current_app,flash
 from flask_login import  current_user, login_required
 from extinsion import db
@@ -9,8 +10,6 @@ from werkzeug.utils import secure_filename
 import os
 from utils.decorators import admin_required
 import uuid
-
-
 
 admin = Blueprint("admin" ,__name__)
 # ===================admindashboard==========////
@@ -173,8 +172,7 @@ def success_stories():
         stories=stories,
         name="Success Stories"
     )
-#===============
-
+#add===============
 @admin.route("/success-stories/add", methods=["GET", "POST"])
 @login_required
 @admin_required
@@ -235,8 +233,7 @@ def add_success_story():
         "admin/add_success_story.html",
         name="Add Success Story"
     )
-#============
-
+# edit============
 @admin.route("/success-stories/edit/<int:story_id>", methods=["GET", "POST"])
 @login_required
 @admin_required
@@ -280,8 +277,7 @@ def edit_success_story(story_id):
         story=story,
         name="Edit Success Story"
     )
-#====================
-
+#delete====================
 @admin.route("/success-stories/delete/<int:story_id>", methods=["POST"])
 @login_required
 @admin_required

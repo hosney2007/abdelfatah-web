@@ -1,3 +1,4 @@
+#imoprts===============================///
 from flask import Flask , render_template, redirect,request,url_for,flash
 from config import Config
 from models.user import User
@@ -17,7 +18,12 @@ from extinsion import db, login_manager, mail,csrf,limiter
 import click
 from werkzeug.security import generate_password_hash
 from models.course import Course
+import os
+
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"]=True
+
+#bluebrint regisrtion====================================///
 app.register_blueprint(auth)
 app.register_blueprint(admin)
 app.register_blueprint(course)
@@ -25,12 +31,8 @@ app.register_blueprint(booking)
 app.register_blueprint(schedule)
 app.register_blueprint(recorded)
 app.register_blueprint(message)
-import os
 
-
-
-
-
+#admin accuont===========================================///
 
 @app.cli.command("create-admin")
 @click.option("--name", prompt="admin name")
@@ -53,7 +55,7 @@ def create_admin(name,email,password):
     print("Admin account crated successfuly")
 
 
-
+#app configrtion==//
 app.config["SECRET_KEY"] = "YOUR SECRET KEY"
 app.config.from_object(Config)
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
@@ -72,7 +74,7 @@ with app.app_context():
     db.create_all()
 
 
-
+#main pages routes===================///
 
 @app.route('/')
 def home():
@@ -143,6 +145,6 @@ def contact():
          return redirect(url_for("contact"))  
     return render_template('contact.html', name = 'contact')    
 
-
+#app run==============///
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True ,host="0.0.0.0" ,port=9000)

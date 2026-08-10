@@ -1,7 +1,5 @@
 
 from extinsion import db
-
-
 class SuccessStory(db.Model):
     __tablename__ = "success_stories"
 

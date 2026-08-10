@@ -1,3 +1,4 @@
+#imports=============///
 from flask import Blueprint, render_template, request, redirect, url_for,flash,current_app
 from werkzeug.security import generate_password_hash , check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
@@ -15,7 +16,7 @@ from models.user import User
 
 auth = Blueprint("auth" ,__name__)
 
-
+#email verification=====================///
 
 def generate_verification_token(email):
 
@@ -25,7 +26,6 @@ def generate_verification_token(email):
         email,
         salt="email-confirm"
     )
-
 
 def send_verification_email(user):
 
@@ -62,7 +62,7 @@ Abdelfatah Academy
     print("current_app.config")
     mail.send(msg)
 
-
+#reset passwoed verify============///
 def generate_reset_token(email):
     serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
 
@@ -70,8 +70,6 @@ def generate_reset_token(email):
         email,
         salt="password-reset"
     )
-
-#=======
 
 def verify_reset_token(token, expiration=3600):
     serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
@@ -87,7 +85,6 @@ def verify_reset_token(token, expiration=3600):
 
     except (BadSignature, SignatureExpired):
         return None
-#=========
 
 def send_reset_password_email(user):
 
@@ -122,14 +119,6 @@ Abdelfatah Academy
 """
 
     mail.send(msg)
-
-
-
-
-
-
-
-
 
 
 
@@ -232,7 +221,6 @@ def resend_verification():
 
     return redirect(url_for("auth.login"))
 
-
 #=========LOGIN========////
 @auth.route("/login", methods=["GET", "POST"])
 @limiter.limit("5 per minute")
@@ -255,7 +243,7 @@ def login():
         return redirect(url_for("auth.login"))
     return render_template("login.html", name="Login", show_resend=True)
 
-
+#forgot password===========////
 @auth.route("/forgot-password", methods=["GET", "POST"])
 @limiter.limit("3 per minute")
 def forgot_password():
@@ -281,8 +269,7 @@ def forgot_password():
         name="Forgot Password"
     )
 
-#=============
-
+#reset passworrd=============///
 @auth.route("/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token):
 
@@ -319,21 +306,6 @@ def reset_password(token):
         "reset_password.html",
         name="Reset Password"
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #======DASHBOARD=====///
@@ -381,11 +353,6 @@ def dashboard():
         pending_bookings=pending_bookings,
         approved_bookings=approved_bookings
     )
-
-
-
-
-
 
 #=====LOGOUT==//
 @auth.route("/logout")

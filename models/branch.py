@@ -1,5 +1,4 @@
 from extinsion import db
-
 class Branch(db.Model):
     __tablename__ = "branches"
     id = db.Column(db.Integer, primary_key=True)
