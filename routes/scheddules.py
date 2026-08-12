@@ -10,7 +10,7 @@ schedule = Blueprint("schedule", __name__)
 @schedule.route("/admin/schedule")
 @admin_required
 @login_required
-def show_schedules():
+def show_schedule():
     schedules = Schedule.query.all()
     print(schedules)
     return render_template("admin/schedules.html" , schedule=schedules, name="Groups")

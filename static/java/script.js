@@ -80,17 +80,6 @@ const counterObserver = new IntersectionObserver((entries) => {
 counters.forEach( counter => counterObserver.observe(counter));
 
 
-//hamburger menu
-const hamburger = document.getElementById("hamburger");
-const navlinks = document.getElementById("nav-links");
-hamburger.addEventListener("click", function(){
-    navlinks.classList.toggle("active");
-    if (navlinks.classList.contains("active")) {
-        hamburger.innerHTML ="×";
-        } else{
-            hamburger.innerHTML ="≡";
-    }
-});
 
 
 
