@@ -23,9 +23,9 @@ def delete_schedule(schedule_id):
     schedule = Schedule.query.get_or_404(schedule_id)
     if schedule.bookings:
         flash("you can't delete this group because it has booking","danger")
-        return redirect(url_for("schedule.show_schedules"))    
+        return redirect(url_for("schedule.show_schedule"))    
     db.session.delete(schedule)
     db.session.commit()
-    return redirect(url_for("schedule.show_schedules"))
+    return redirect(url_for("schedule.show_schedule"))
 
 
